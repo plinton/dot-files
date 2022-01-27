@@ -6,69 +6,15 @@
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
+  imports = [ ./terminal.nix ./kitty.nix ./neovim.nix ];
   nixpkgs.config.allowUnfree = true;
   home.username = "paul";
   home.homeDirectory = "/home/paul";
   home.packages = with pkgs; [
-    python3
-    ripgrep
-    delta
-    bat
-    git
-    fzf
-    fd
-    poetry
-    procs
-    yq-go
-    jq
-    shellharden
-    sd
-    fastmod
-    xsv
     tdesktop
     zoom-us
     kmix
   ];
-  programs.neovim = {
-    enable = true;
-    extraConfig = builtins.readFile ~/src/dotfiles/init.vim;
-    extraPackages = with pkgs; [
-      nodePackages.typescript-language-server
-      pyright
-    ];
-    plugins = with pkgs.vimPlugins; [
-      gitsigns-nvim
-      plenary-nvim
-      nvim-lspconfig
-      vim-sensible
-      vim-surround
-      vim-fugitive
-      vim-swap
-      vim-matchup
-      nvim-ts-rainbow
-      nvim-autopairs
-      vim-illuminate
-      split-term-vim
-      vim-sleuth
-      nvim-compe
-      fzf-vim fzfWrapper
-      nvim-web-devicons
-      lualine-nvim
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
-      nvim-treesitter-context
-      nvim-treesitter-refactor
-      which-key-nvim
-      lsp_signature-nvim
-      nvim-cmp cmp-nvim-lsp cmp-nvim-lua cmp-buffer cmp-path cmp-treesitter
-      gitlinker-nvim
-    ];
-  };
-  programs.kitty = {
-    enable = true;
-    settings = {
-      shell = "fish"
-    };
-  };
   programs.fish = {
     enable = true;
     plugins = [
