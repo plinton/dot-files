@@ -16,4 +16,16 @@
     xsv
     nnn
   ];
+
+  programs.git = {
+    enable = true;
+    delta = {
+      enable = true;
+    };
+  };
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+  };
 }
