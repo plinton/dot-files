@@ -14,28 +14,20 @@
     tdesktop
     zoom-us
     kmix
+    bind
   ];
-  programs.fish = {
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
+  programs.starship = {
     enable = true;
-    plugins = [
-      {
-        name = "foreign-env";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-foreign-env";
-          rev = "dddd9213272a0ab848d474d0cbde12ad034e65bc";
-          sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
-        };
-      }
-    ];
-    shellInit =
-      ''
-      if test -f /opt/dev/dev.fish
-        source /opt/dev/dev.fish
-      end
-    '';
-    shellAbbrs = {
-      gsm = "git switch master";
+    enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      line_break = {
+        disabled = true;
+      };
     };
   };
 

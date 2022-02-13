@@ -5,16 +5,8 @@
     ripgrep
     delta
     bat
-    git
-    fzf
     fd
-    procs
-    yq-go
-    jq
-    sd
     fastmod
-    xsv
-    nnn
   ];
 
   programs.git = {
@@ -23,9 +15,23 @@
       enable = true;
     };
   };
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
+  };
+
+  programs.lsd = {
+    enable = true;
+    enableAliases = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCommand = "fd --type f";
+    fileWidgetCommand = "fd --type f";
+    fileWidgetOptions = [ "--preview 'head {}'"];
   };
 }

@@ -3,7 +3,7 @@
   programs.kitty = {
     enable = true;
     settings = {
-      shell = "fish";
+      shell = "zsh";
     };
   };
 }
