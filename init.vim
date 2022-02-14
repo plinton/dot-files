@@ -39,8 +39,6 @@ hi link illuminatedWord Visual
 
 set clipboard=unnamed,unnamedplus
 
-let g:delimitMate_expand_cr = 1
-
 autocmd BufRead * execute 'setl suffixesadd+=.' . expand('%:e')
 autocmd BufRead,BufNewFile *.nix setfiletype nix
 
@@ -69,7 +67,8 @@ require'nvim-treesitter.configs'.setup {
     extended_mode = true,
   }
 }
-require'cmp'.setup {
+local cmp = require'cmp'
+cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
 
@@ -88,11 +87,24 @@ require'cmp'.setup {
     { name = 'nvim_lua'},
 
   },
+  mapping = {
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  },
+
   experimental = {
     native_menu = true,
     ghost_text = true,
   }
 }
+
 
 local cmp_lsp = require('cmp_nvim_lsp')
 local nvim_lsp = require('lspconfig')
@@ -127,21 +139,12 @@ for _, lsp in ipairs({"pyright", "tsserver", "sorbet"}) do
     }
   }
 end
--- Enable flags for sorbet
---nvim_lsp["sorbet"].setup {
---  cmd = {"bundle", "exec", "srb", "tc", "--lsp", "--enable-all-experimental-lsp-features"},
---  capabilities = cmp_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities()),
---  on_attach = on_attach,
---  flags = {
---    debounce_text_changes = 150,
---  }
---}
-
--- vim.o.completeopt = "menuone,noselect"
 
 require('lualine').setup()
 require('gitlinker').setup()
 require('nvim-autopairs').setup{}
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 require('which-key').setup{}
 require "lsp_signature".setup()
 require('gitsigns').setup {
