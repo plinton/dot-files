@@ -1,50 +1,48 @@
-"" Encoding
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8
+-- Encoding
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+vim.opt.fileencodings = "utf-8"
 
-"" Fix backspace indent
-set backspace=indent,eol,start
+-- Fix backspace indent
+vim.opt.backspace = "indent,eol,start"
 
-"" Tabs. May be overridden by autocmd rules
-set tabstop=4
-set softtabstop=0
-set shiftwidth=4
-set expandtab
+-- Tabs. May be overridden by autocmd rules
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 0
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
 
-"" Map leader to ,
-let mapleader=','
+-- Searching
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
-"" Searching
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
+vim.opt.fileformats = "unix,dos,mac"
 
-set fileformats=unix,dos,mac
+vim.opt.lazyredraw = true
+vim.opt.undofile = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.list = true
 
-set lazyredraw
-set undofile
-set number relativenumber
-set list
+vim.opt.inccommand = "nosplit"
 
-set inccommand=nosplit
+vim.g.mapleader = ','
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+vim.cmd [[
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Illuminate should highlight, not underline
-hi link illuminatedWord Visual
+  :tnoremap <Esc> <C-\><C-n>
+  autocmd BufRead * execute 'setl suffixesadd+=.' . expand('%:e')
+  autocmd BufRead,BufNewFile *.nix setfiletype nix
+  nnoremap <leader>ff <cmd>Files<cr>
+  nnoremap <leader>fg <cmd>Rg<cr>
+]]
 
-set clipboard=unnamed,unnamedplus
-
-autocmd BufRead * execute 'setl suffixesadd+=.' . expand('%:e')
-autocmd BufRead,BufNewFile *.nix setfiletype nix
-
-:tnoremap <Esc> <C-\><C-n>
-
-lua <<EOF
+vim.opt.clipboard = "unnamed,unnamedplus"
 -- treesitter
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -155,6 +153,3 @@ require('gitsigns').setup {
     delay = 100,
   }
 }
-EOF
-nnoremap <leader>ff <cmd>Files<cr>
-nnoremap <leader>fg <cmd>Rg<cr>

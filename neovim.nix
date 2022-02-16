@@ -2,7 +2,7 @@
 {
   programs.neovim = {
     enable = true;
-    extraConfig = builtins.readFile ./init.vim;
+    extraConfig = "lua <<EOF\n" + builtins.readFile ./init.lua + "EOF\n";
     extraPackages = with pkgs; [
       nodePackages.typescript-language-server
       pyright
