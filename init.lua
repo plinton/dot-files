@@ -96,11 +96,13 @@ cmp.setup {
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   },
+  views = {
+    entries = "native"
+  },
 
   experimental = {
-    native_menu = true,
     ghost_text = true,
-  }
+  },
 }
 
 
