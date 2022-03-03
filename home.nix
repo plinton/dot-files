@@ -15,6 +15,9 @@
     zoom-us
     kmix
     bind
+    kdeconnect
+    lastpass-cli
+    spotify-tui spotifyd
   ];
   home.sessionVariables = {
     EDITOR = "nvim";
