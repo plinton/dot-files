@@ -22,7 +22,6 @@
       split-term-vim
       vim-sleuth
       nvim-compe
-      fzf-vim fzfWrapper
       nvim-web-devicons
       lualine-nvim
       (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
@@ -32,6 +31,7 @@
       lsp_signature-nvim
       nvim-cmp cmp-nvim-lsp cmp-nvim-lua cmp-buffer cmp-path cmp-treesitter
       gitlinker-nvim
+      telescope-nvim telescope-fzy-native-nvim
     ];
   };
 }

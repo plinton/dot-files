@@ -38,8 +38,9 @@ vim.cmd [[
   :tnoremap <Esc> <C-\><C-n>
   autocmd BufRead * execute 'setl suffixesadd+=.' . expand('%:e')
   autocmd BufRead,BufNewFile *.nix setfiletype nix
-  nnoremap <leader>ff <cmd>Files<cr>
-  nnoremap <leader>fg <cmd>Rg<cr>
+  nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+  nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+  nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 ]]
 
 vim.opt.clipboard = "unnamed,unnamedplus"
@@ -139,6 +140,25 @@ for _, lsp in ipairs({"pyright", "tsserver", "sorbet"}) do
     }
   }
 end
+
+local actions = require("telescope.actions")
+local telescope = require('telescope')
+local project_files = function()
+  local opts = {} -- define here if you want to define something
+  local ok = pcall(require"telescope.builtin".git_files, opts)
+  if not ok then require"telescope.builtin".find_files(opts) end
+end
+
+telescope.setup{
+  defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close
+      },
+    },
+  }
+}
+telescope.load_extension('fzy_native')
 
 require('lualine').setup()
 require('gitlinker').setup()
