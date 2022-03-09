@@ -1,13 +1,19 @@
 { config, pkgs, ... }:
+
+let
+  pkgsUnstable = import <unstable> {};
+in
 {
   programs.neovim = {
     enable = true;
+    package = pkgsUnstable.neovim-unwrapped;
+    withNodeJs = true;
     extraConfig = "lua <<EOF\n" + builtins.readFile ./init.lua + "EOF\n";
-    extraPackages = with pkgs; [
+    extraPackages = with pkgsUnstable; [
       nodePackages.typescript-language-server
       pyright
     ];
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgsUnstable.vimPlugins; [
       gitsigns-nvim
       plenary-nvim
       nvim-lspconfig
@@ -24,13 +30,14 @@
       nvim-compe
       nvim-web-devicons
       lualine-nvim
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+      (nvim-treesitter.withPlugins (plugins: pkgsUnstable.tree-sitter.allGrammars))
       nvim-treesitter-context
       nvim-treesitter-refactor
       which-key-nvim
       lsp_signature-nvim
       nvim-cmp cmp-nvim-lsp cmp-nvim-lua cmp-buffer cmp-path cmp-treesitter
       gitlinker-nvim
+      copilot-vim
       telescope-nvim telescope-fzy-native-nvim
     ];
   };
