@@ -35,10 +35,11 @@ in
       nvim-treesitter-refactor
       which-key-nvim
       lsp_signature-nvim
-      nvim-cmp cmp-nvim-lsp cmp-nvim-lua cmp-buffer cmp-path cmp-treesitter
+      luasnip
+      nvim-cmp cmp-nvim-lsp cmp-nvim-lua cmp-buffer cmp-path cmp-treesitter cmp_luasnip
       gitlinker-nvim
       copilot-vim
-      telescope-nvim telescope-fzy-native-nvim
+      telescope-nvim telescope-fzf-native-nvim
     ];
   };
 }

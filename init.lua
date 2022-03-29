@@ -32,15 +32,14 @@ vim.opt.inccommand = "nosplit"
 vim.g.mapleader = ','
 
 vim.cmd [[
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
   :tnoremap <Esc> <C-\><C-n>
   autocmd BufRead * execute 'setl suffixesadd+=.' . expand('%:e')
   autocmd BufRead,BufNewFile *.nix setfiletype nix
   nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
   nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
   nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+  let g:copilot_no_tab_map = v:true
+  imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
 ]]
 
 vim.opt.clipboard = "unnamed,unnamedplus"
@@ -66,8 +65,17 @@ require'nvim-treesitter.configs'.setup {
     extended_mode = true,
   }
 }
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+local luasnip = require("luasnip")
 local cmp = require'cmp'
 cmp.setup {
+  snippet = {
+    expand = function(args) luasnip.lsp_expand(args.body) end
+  },
   sources = {
     { name = 'nvim_lsp' },
 
@@ -75,21 +83,37 @@ cmp.setup {
     --{ name = 'vsnip' },
 
     -- For luasnip user.
-    -- { name = 'luasnip' },
+    { name = 'luasnip' },
 
     -- For ultisnips user.
     -- { name = 'ultisnips' },
 
-    { name = 'buffer' },
     { name = 'treesitter' },
-    { name = 'path' },
     { name = 'nvim_lua'},
+    { name = 'buffer' },
+    { name = 'path' },
 
   },
   mapping = {
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+      if cmp.visible() then
+        local entry = cmp.get_selected_entry()
+        if not entry then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        else
+          cmp.confirm()
+        end
+      else
+        fallback()
+      end
+    end, {"i","s","c",}),
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-g>'] = cmp.mapping(function(fallback)
+      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+    end),
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
@@ -99,10 +123,6 @@ cmp.setup {
   },
   views = {
     entries = "native"
-  },
-
-  experimental = {
-    ghost_text = true,
   },
 }
 
@@ -143,11 +163,6 @@ end
 
 local actions = require("telescope.actions")
 local telescope = require('telescope')
-local project_files = function()
-  local opts = {} -- define here if you want to define something
-  local ok = pcall(require"telescope.builtin".git_files, opts)
-  if not ok then require"telescope.builtin".find_files(opts) end
-end
 
 telescope.setup{
   defaults = {
@@ -156,10 +171,15 @@ telescope.setup{
         ["<esc>"] = actions.close
       },
     },
+    extensions = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+    }
   }
 }
-telescope.load_extension('fzy_native')
-
+telescope.load_extension('fzf')
 require('lualine').setup()
 require('gitlinker').setup()
 require('nvim-autopairs').setup{}
