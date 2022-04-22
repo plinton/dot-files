@@ -35,7 +35,7 @@ in
       nvim-treesitter-refactor
       which-key-nvim
       lsp_signature-nvim
-      luasnip
+      luasnip friendly-snippets
       nvim-cmp cmp-nvim-lsp cmp-nvim-lua cmp-buffer cmp-path cmp-treesitter cmp_luasnip
       gitlinker-nvim
       copilot-vim
