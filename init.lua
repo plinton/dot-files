@@ -40,6 +40,7 @@ vim.cmd [[
   nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
   let g:copilot_no_tab_map = v:true
   imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
+  autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
 ]]
 
 vim.opt.clipboard = "unnamed,unnamedplus"

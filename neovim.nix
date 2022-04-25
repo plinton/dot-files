@@ -40,6 +40,7 @@ in
       gitlinker-nvim
       copilot-vim
       telescope-nvim telescope-fzf-native-nvim
+      vim-oscyank
     ];
   };
 }
