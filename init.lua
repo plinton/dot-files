@@ -28,6 +28,7 @@ vim.opt.list = true
 
 vim.opt.inccommand = "nosplit"
 
+vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
 vim.cmd [[
@@ -65,10 +66,6 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 local cmp = require'cmp'
@@ -107,7 +104,7 @@ cmp.setup {
       else
         fallback()
       end
-    end, {"i","s","c",}),
+    end, {"i","s",}),
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
