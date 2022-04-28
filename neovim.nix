@@ -8,6 +8,7 @@ in
     enable = true;
     package = pkgsUnstable.neovim-unwrapped;
     withNodeJs = true;
+    withRuby = false;
     extraConfig = "lua <<EOF\n" + builtins.readFile ./init.lua + "EOF\n";
     extraPackages = with pkgsUnstable; [
       nodePackages.typescript-language-server
