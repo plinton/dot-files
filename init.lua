@@ -31,17 +31,20 @@ vim.opt.inccommand = "nosplit"
 vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
-vim.cmd [[
-  :tnoremap <Esc> <C-\><C-n>
-  autocmd BufRead * execute 'setl suffixesadd+=.' . expand('%:e')
-  autocmd BufRead,BufNewFile *.nix setfiletype nix
-  nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-  nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-  nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-  let g:copilot_no_tab_map = v:true
-  imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
-  autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
-]]
+vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
+  pattern = '*.nix',
+  callback = function() vim.bo.filetype = 'nix' end,
+})
+vim.api.nvim_create_autocmd('TextYankPost', {
+  pattern = '*',
+  command = 'if v:event.operator is \'y\' && v:event.regname is \'\' | execute  \'OSCYankReg " \' | endif'
+})
+vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files() end)
+vim.keymap.set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end)
+vim.keymap.set('n', '<leader>fb', function() require('telescope.builtin').buffers() end)
+vim.g.copilot_no_tab_map = true
+vim.keymap.set('i', '<expr>', '<Plug>(vimrc:copilot-dummy-map) copilot#Accept("<Tab>")', { noremap = 'false'})
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 vim.opt.clipboard = "unnamed,unnamedplus"
 -- treesitter
@@ -93,19 +96,6 @@ cmp.setup {
 
   },
   mapping = {
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
-      if cmp.visible() then
-        local entry = cmp.get_selected_entry()
-        if not entry then
-          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        else
-          cmp.confirm()
-        end
-      else
-        fallback()
-      end
-    end, {"i","s",}),
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
