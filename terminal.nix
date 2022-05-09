@@ -7,6 +7,8 @@
     bat
     fd
     fastmod
+    jq
+    rq
   ];
 
   programs.git = {
