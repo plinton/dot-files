@@ -18,6 +18,7 @@
     kdeconnect
     lastpass-cli
     spotify-tui spotifyd
+    xclip
   ];
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -31,6 +32,12 @@
       line_break = {
         disabled = true;
       };
+    };
+  };
+  programs.zsh = {
+    shellAliases = {
+      pbcopy = "xclip -selection clipboard";
+      pbpaste = "xclip -selection clipboard -o";
     };
   };
 
