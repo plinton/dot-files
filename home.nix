@@ -19,6 +19,7 @@
     lastpass-cli
     spotify-tui spotifyd
     xclip
+    skanlite
   ];
   home.sessionVariables = {
     EDITOR = "nvim";

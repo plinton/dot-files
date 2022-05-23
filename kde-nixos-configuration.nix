@@ -104,6 +104,13 @@ in
   };
 
 
+  # Scanner
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.sane-airscan pkgs.hplipWithPlugin ];
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
@@ -113,6 +120,9 @@ in
     extraGroups = [ 
       "wheel"  # Enable ‘sudo’ for the user.
       "networkmanager"
+      "scanner" # Scanner groups
+      "lp"
+      "dialout" # for working with arduino/serial ports
     ];
     shell = with pkgs; unstable.zsh;
   };
@@ -144,6 +154,7 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
