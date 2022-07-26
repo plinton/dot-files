@@ -31,8 +31,8 @@ vim.opt.inccommand = "nosplit"
 vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
-local colorscheme_str = 'colorscheme catppuccin' -- put this on a different line to avoid treesitter injection issues
-vim.cmd(colorscheme_str)
+vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+vim.cmd[[colorscheme catppuccin]]
 
 vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
   pattern = '*.nix',
