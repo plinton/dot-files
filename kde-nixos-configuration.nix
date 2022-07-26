@@ -28,17 +28,15 @@ in
         config = config.nixpkgs.config;
       };
     };
+    allowUnfree = true;
   };
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "hplip"
-  ];
 
   boot.loader.timeout = 1;
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.theme = pkgs.nixos-grub2-theme;
