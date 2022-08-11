@@ -32,17 +32,22 @@ in
   };
 
   boot.loader.timeout = 1;
+  # use systemd-boot
+  boot.loader.systemd-boot = {
+   enable = true;
+   configurationLimit = 5;
+   editor = false;
+  };
 
   # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.theme = pkgs.nixos-grub2-theme;
+  #boot.loader.grub.enable = true;
+  #boot.loader.grub.version = 2;
+  #boot.loader.grub.efiSupport = true;
+  #boot.loader.grub.efiInstallAsRemovable = true;
+  #boot.loader.grub.theme = pkgs.nixos-grub2-theme;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "nodev"; # or "nodev" for efi only
+  #boot.loader.grub.device = "nodev"; # or "nodev" for efi only
 
   networking.hostName = "mr-laptop"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables networkmanager.
