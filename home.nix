@@ -8,9 +8,6 @@
   # paths it should manage.
   imports = [ ./terminal.nix ./kitty.nix ./neovim.nix ];
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [
-      "googleearth-pro-7.3.4.8248"
-    ];
   home.username = "paul";
   home.homeDirectory = "/home/paul";
   home.packages = with pkgs; [
@@ -23,7 +20,6 @@
     spotify-tui spotifyd
     xclip
     skanlite
-    googleearth-pro
   ];
   home.sessionVariables = {
     EDITOR = "nvim";
