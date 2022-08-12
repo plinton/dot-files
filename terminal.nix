@@ -11,6 +11,10 @@
     rq
   ];
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
   programs.git = {
     enable = true;
     delta = {

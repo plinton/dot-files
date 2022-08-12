@@ -6,7 +6,7 @@
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  imports = [ ./terminal.nix ./kitty.nix ./neovim.nix ];
+  imports = [ ./terminal.nix ./kitty.nix ./neovim.nix ./kde.nix ];
   nixpkgs.config.allowUnfree = true;
   home.username = "paul";
   home.homeDirectory = "/home/paul";
@@ -18,6 +18,9 @@
     lastpass-cli
     spotify-tui spotifyd
   ];
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 
   programs.starship = {
     enable = true;
