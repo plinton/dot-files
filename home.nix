@@ -1,23 +1,52 @@
-{ config, pkgs, nixpkgs, ... }:
-
-{
-  # Let Home Manager install and manage itself.
-  #programs.home-manager.enable = true;
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  imports = [ ./terminal.nix ./kitty.nix ./neovim.nix ];
-  nixpkgs.config.allowUnfree = true;
-  home.username = "paul";
-  home.homeDirectory = "/home/paul";
-  home.packages = with pkgs; [
+{ config, pkgs, nixpkgs, lib, ... }:
+let
+  linux_only_pkgs = with pkgs; [
     tdesktop
+  ];
+  common_pkgs = with pkgs; [
     zoom-us
-    teams
-    bind
     lastpass-cli
     spotify-tui spotifyd
   ];
+in {
+  imports = [
+    ./terminal.nix
+    ./kitty.nix
+    ./neovim.nix
+  ];
+
+  # try to get system packages into Applications
+  # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1190875080
+  home.activation = lib.mkIf pkgs.stdenv.isDarwin {
+    copyApplications = let
+      apps = pkgs.buildEnv {
+        name = "home-manager-applications";
+        paths = config.home.packages;
+        pathsToLink = "/Applications";
+      };
+    in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      baseDir="$HOME/Applications/Home Manager Apps"
+      if [ -d "$baseDir" ]; then
+        rm -rf "$baseDir"
+      fi
+      mkdir -p "$baseDir"
+      for appFile in ${apps}/Applications/*; do
+        target="$baseDir/$(basename "$appFile")"
+        $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
+        $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
+      done
+    '';
+    };
+
+  # N.B. The user will be defined in the flake
+
+  home.packages = if pkgs.stdenv.isDarwin
+    then common_pkgs 
+    else linux_only_pkgs ++ common_pkgs;
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 
   programs.starship = {
     enable = true;

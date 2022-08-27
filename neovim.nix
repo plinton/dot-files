@@ -1,23 +1,19 @@
 { config, pkgs, ... }:
 
-let
-  pkgsUnstable = import <unstable> {};
-in
 {
   programs.neovim = {
     enable = true;
-    package = pkgsUnstable.neovim-unwrapped;
     withNodeJs = true;
     # The neovim ruby overrides the one specified in the shell. Great for plugins in ruby, but breaks sorbet's lookups
     withRuby = false;
     # Put some lua-based plugins here as sometimes runtimepath does not always pick them up
-    extraLuaPackages = with pkgsUnstable.lua51Packages; [ plenary-nvim gitsigns-nvim ];
+    extraLuaPackages = with pkgs.lua51Packages; [ plenary-nvim gitsigns-nvim ];
     extraConfig = "lua <<EOF\n" + builtins.readFile ./init.lua + "EOF\n";
-    extraPackages = with pkgsUnstable; [
+    extraPackages = with pkgs; [
       nodePackages.typescript-language-server
       pyright
     ];
-    plugins = with pkgsUnstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       gitsigns-nvim
       nvim-lspconfig
       vim-sensible
@@ -32,7 +28,7 @@ in
       vim-sleuth
       nvim-web-devicons
       lualine-nvim
-      (nvim-treesitter.withPlugins (plugins: pkgsUnstable.tree-sitter.allGrammars))
+      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
       nvim-treesitter-context
       nvim-treesitter-refactor
       which-key-nvim
