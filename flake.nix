@@ -1,3 +1,4 @@
+# Originally based on https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 {
   description = "Paul's darwin system";
 
@@ -13,7 +14,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # Other sources
-    
+
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
