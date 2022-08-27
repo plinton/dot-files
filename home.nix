@@ -15,6 +15,11 @@ in {
     ./neovim.nix
   ];
 
+  programs.git = {
+    userName = "Paul Ellis Linton";
+    userEmail = "plinton@musicalcomputer.com";
+  };
+
   # try to get system packages into Applications
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1190875080
   home.activation = lib.mkIf pkgs.stdenv.isDarwin {
