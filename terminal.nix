@@ -43,6 +43,6 @@
       "--color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
     ];
     fileWidgetCommand = "fd --type f";
-    fileWidgetOptions = [ "--preview 'head {}'"];
+    fileWidgetOptions = [ "--preview 'head {}'" ];
   };
 }

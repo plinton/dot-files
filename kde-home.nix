@@ -16,7 +16,8 @@
     teams
     bind
     lastpass-cli
-    spotify-tui spotifyd
+    spotify-tui
+    spotifyd
   ];
   home.sessionVariables = {
     EDITOR = "nvim";

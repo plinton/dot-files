@@ -12,7 +12,8 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
     ];
 
@@ -34,9 +35,9 @@ in
   boot.loader.timeout = 1;
   # use systemd-boot
   boot.loader.systemd-boot = {
-   enable = true;
-   configurationLimit = 5;
-   editor = false;
+    enable = true;
+    configurationLimit = 5;
+    editor = false;
   };
 
   # Use the GRUB 2 boot loader.
@@ -50,7 +51,7 @@ in
   #boot.loader.grub.device = "nodev"; # or "nodev" for efi only
 
   networking.hostName = "mr-laptop"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Enables networkmanager.
+  networking.networkmanager.enable = true; # Enables networkmanager.
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -81,7 +82,7 @@ in
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-  
+
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -120,8 +121,8 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.paul = {
     isNormalUser = true;
-    extraGroups = [ 
-      "wheel"  # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
       "scanner" # Scanner groups
       "lp"
@@ -132,11 +133,11 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-     firefox
-     unstable.home-manager
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #   wget
+    firefox
+    unstable.home-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

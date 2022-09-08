@@ -1,7 +1,7 @@
 { config, pkgs, nixpkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
   ];
   # try to get system packages into Applications
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1190875080
