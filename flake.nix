@@ -35,7 +35,7 @@
       };
 
       darwinConfigurations = rec {
-        MBPsomthorDonna = darwinSystem {
+        pauls-mac = darwinSystem {
           system = "x86_64-darwin";
           modules = attrValues self.darwinModules ++ [
             # Main `nix-darwin` config
