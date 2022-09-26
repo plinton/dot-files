@@ -31,9 +31,6 @@ vim.opt.inccommand = "nosplit"
 vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
-vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-vim.cmd[[colorscheme catppuccin]]
-
 vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
   pattern = '*.nix',
   callback = function() vim.bo.filetype = 'nix' end,
