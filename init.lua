@@ -163,7 +163,7 @@ end
 
 for _, lsp in ipairs({"pyright", "tsserver", "sorbet"}) do
   nvim_lsp[lsp].setup {
-    capabilities = cmp_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = cmp_lsp.default_capabilities(),
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,

@@ -1,8 +1,11 @@
 { config, pkgs, nixpkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-  ];
+  users.users.paul.home = /Users/paul;
+  # try out cachix later
+  #environment.systemPackages = with pkgs; [
+  #  cachix
+  #];
   # try to get system packages into Applications
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1190875080
   system.activationScripts.applications.text = pkgs.lib.mkForce (
@@ -19,7 +22,7 @@
 
   # https://github.com/nix-community/home-manager/issues/423
   environment.variables = {
-    TERMINFO_DIRS = "${pkgs.kitty.terminfo.outPath}/share/terminfo";
+    #TERMINFO_DIRS = "${pkgs.kitty.terminfo.outPath}/share/terminfo";
   };
 
   # Use a custom configuration.nix location.
@@ -28,7 +31,6 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  # nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
     auto-optimise-store = true
     experimental-features = nix-command flakes
