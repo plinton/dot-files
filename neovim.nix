@@ -47,6 +47,7 @@
       telescope-nvim
       telescope-fzf-native-nvim
       vim-oscyank
+      catppuccin-nvim
     ];
   };
 }
