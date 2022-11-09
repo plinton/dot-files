@@ -45,6 +45,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files() end)
 vim.keymap.set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end)
 vim.keymap.set('n', '<leader>fb', function() require('telescope.builtin').buffers() end)
+vim.keymap.set("n", "<leader>tt", "<cmd>TroubleToggle<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>tl", "<cmd>TroubleToggle loclist<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>tq", "<cmd>TroubleToggle quickfix<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+  {silent = true, noremap = true}
+)
 vim.g.copilot_no_tab_map = true
 vim.keymap.set('i', '<expr>', '<Plug>(vimrc:copilot-dummy-map) copilot#Accept("<Tab>")', { noremap = 'false'})
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
@@ -215,6 +233,7 @@ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 require('which-key').setup{}
 require "lsp_signature".setup()
+require("trouble").setup({})
 require('gitsigns').setup {
   current_line_blame = true,
   current_line_blame_opts = {

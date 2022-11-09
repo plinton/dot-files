@@ -49,6 +49,7 @@
       telescope-fzf-native-nvim
       vim-oscyank
       catppuccin-nvim
+      trouble-nvim
     ];
   };
 }
