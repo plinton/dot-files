@@ -42,6 +42,7 @@
       cmp-path
       cmp-treesitter
       cmp_luasnip
+      cmp-cmdline
       gitlinker-nvim
       copilot-vim
       telescope-nvim

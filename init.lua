@@ -134,11 +134,25 @@ cmp.setup {
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
-  views = {
-    entries = "native"
-  },
 }
 
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 local cmp_lsp = require('cmp_nvim_lsp')
 local nvim_lsp = require('lspconfig')
@@ -151,22 +165,23 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gy', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_set_keymap('n', 'gd', vim.lsp.buf.definition(), opts)
+  buf_set_keymap('n', 'gy', vim.lsp.buf.declaration(), opts)
+  buf_set_keymap('n', 'K', vim.lsp.buf.hover(), opts)
+  buf_set_keymap('n', 'gi', vim.lsp.buf.implementation(), opts)
+  buf_set_keymap('n', '<leader>rn', vim.lsp.buf.rename(), opts)
+  buf_set_keymap('n', 'gr', vim.lsp.buf.references(), opts)
+  buf_set_keymap('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics(), opts)
+  buf_set_keymap('n', '[d', vim.lsp.diagnostic.goto_prev(), opts)
+  buf_set_keymap('n', ']d', vim.lsp.diagnostic.goto_next(), opts)
+  buf_set_keymap('n', '<space>q', vim.lsp.diagnostic.set_loclist(), opts)
+  buf_set_keymap("n", "<space>f", vim.lsp.buf.formatting(), opts)
 end
 
+local capabilities = cmp_lsp.default_capabilities()
 for _, lsp in ipairs({"pyright", "tsserver", "sorbet"}) do
   nvim_lsp[lsp].setup {
-    capabilities = cmp_lsp.default_capabilities(),
+    capabilities = capabilities,
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
