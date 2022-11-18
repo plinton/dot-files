@@ -16,7 +16,6 @@
     plugins = with pkgs.vimPlugins; [
       gitsigns-nvim
       nvim-lspconfig
-      vim-sensible
       vim-surround
       vim-fugitive
       vim-swap
