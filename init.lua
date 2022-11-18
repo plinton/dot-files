@@ -234,11 +234,21 @@ cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex 
 require('which-key').setup{}
 require "lsp_signature".setup()
 require("trouble").setup({})
+require("guess-indent").setup({})
 require('gitsigns').setup {
+  on_attach = function(bufnr)
+    local function map(mode, lhs, rhs, opts)
+      opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    end
+    -- Navigation
+    map('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+    map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
+  end,
   current_line_blame = true,
   current_line_blame_opts = {
     virt_text = true,
     virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
-    delay = 100,
-  }
+    delay = 200,
+  },
 }
