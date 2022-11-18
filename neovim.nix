@@ -25,7 +25,6 @@
       nvim-autopairs
       vim-illuminate
       split-term-vim
-      vim-sleuth
       nvim-web-devicons
       lualine-nvim
       (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
@@ -50,6 +49,7 @@
       vim-oscyank
       catppuccin-nvim
       trouble-nvim
+      guess-indent-nvim
     ];
   };
 }
