@@ -1,11 +1,10 @@
 # Originally based on https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 {
-  description = "Paul's darwin system";
+  description = "Paul's systems";
 
   inputs = {
     # Package sets
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Environment/system management
     darwin.url = "github:lnl7/nix-darwin/master";
@@ -30,8 +29,8 @@
     {
       # set formatter
       formatter = {
-        x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
-        x86_64-darwin = nixpkgs.legacyPackages.x86_64-darwin.nixpkgs-fmt;
+        x86_64-linux = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.nixpkgs-fmt;
+        x86_64-darwin = inputs.nixpkgs-unstable.legacyPackages.x86_64-darwin.nixpkgs-fmt;
       };
 
       homeConfigurations = rec {
@@ -81,7 +80,6 @@
 
       # My `nix-darwin` modules that are pending upstream, or patched versions waiting on upstream
       # fixes.
-      darwinModules = {
-      };
+      darwinModules = { };
     };
 }

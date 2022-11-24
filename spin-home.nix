@@ -12,7 +12,7 @@
 
   home.stateVersion = "21.05";
   programs.zsh.initExtra =
-   ''
-   source /etc/zsh/zshrc.default.inc.zsh
-   '';
+    ''
+      source /etc/zsh/zshrc.default.inc.zsh
+    '';
 }
