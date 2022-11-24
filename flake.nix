@@ -34,6 +34,15 @@
         x86_64-darwin = nixpkgs.legacyPackages.x86_64-darwin.nixpkgs-fmt;
       };
 
+      homeConfigurations = rec {
+        spin = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+          modules = [
+            ./spin-home.nix
+          ];
+        };
+      };
+
       # My `nix-darwin` configs
       darwinConfigurations = rec {
         pauls-mac = darwinSystem {
