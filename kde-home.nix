@@ -19,9 +19,6 @@
     spotify-tui
     spotifyd
   ];
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
 
   programs.starship = {
     enable = true;
