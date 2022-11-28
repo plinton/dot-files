@@ -21,6 +21,8 @@ in
     userName = "Paul Ellis Linton";
     userEmail = "plinton@musicalcomputer.com";
   };
+  # this symlinks the apps, which spotlight won't follow. Seed below
+  disabledModules = [ "targets/darwin/linkapps.nix" ];
 
   # try to get system packages into Applications
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1190875080
@@ -53,10 +55,6 @@ in
     if pkgs.stdenv.isDarwin
     then common_pkgs
     else linux_only_pkgs ++ common_pkgs;
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
 
   programs.starship = {
     enable = true;
