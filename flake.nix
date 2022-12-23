@@ -42,6 +42,23 @@
         };
       };
 
+      nixosConfigurations.mr-laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        #specialArgs = attrs;
+        modules = [
+          # main configuration
+          ./kde-nixos-configuration.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            # `home-manager` config
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.paul = import ./kde-home.nix;
+          }
+        ];
+      };
       # My `nix-darwin` configs
       darwinConfigurations = rec {
         pauls-mac = darwinSystem {
