@@ -32,7 +32,7 @@ vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-vim.cmd[[colorscheme catppuccin]]
+vim.cmd [[colorscheme catppuccin]]
 
 vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
   pattern = '*.nix',
@@ -46,32 +46,32 @@ vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_f
 vim.keymap.set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end)
 vim.keymap.set('n', '<leader>fb', function() require('telescope.builtin').buffers() end)
 vim.keymap.set("n", "<leader>tt", "<cmd>TroubleToggle<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>tl", "<cmd>TroubleToggle loclist<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>tq", "<cmd>TroubleToggle quickfix<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true }
 )
 vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true }
 )
 vim.g.copilot_no_tab_map = true
-vim.keymap.set('i', '<expr>', '<Plug>(vimrc:copilot-dummy-map) copilot#Accept("<Tab>")', { noremap = 'false'})
+vim.keymap.set('i', '<expr>', '<Plug>(vimrc:copilot-dummy-map) copilot#Accept("<Tab>")', { noremap = 'false' })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 vim.opt.clipboard = "unnamed,unnamedplus"
 -- treesitter
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = true,              -- false will disable the whole extension
+    enable = true, -- false will disable the whole extension
   },
   incremental_selection = {
     enable = true,
@@ -93,7 +93,7 @@ require'nvim-treesitter.configs'.setup {
 
 local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
-local cmp = require'cmp'
+local cmp = require 'cmp'
 cmp.setup {
   snippet = {
     expand = function(args) luasnip.lsp_expand(args.body) end
@@ -111,7 +111,7 @@ cmp.setup {
     -- { name = 'ultisnips' },
 
     { name = 'treesitter' },
-    { name = 'nvim_lua'},
+    { name = 'nvim_lua' },
     { name = 'buffer' },
     { name = 'path' },
 
@@ -143,7 +143,8 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<C-g>'] = cmp.mapping(function(fallback)
-      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
+        true)
     end),
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<C-e>'] = cmp.mapping({
@@ -199,13 +200,10 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = cmp_lsp.default_capabilities()
-for _, lsp in ipairs({"pyright", "tsserver", "sorbet"}) do
+for _, lsp in ipairs({ "pyright", "tsserver", "sorbet" }) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
   }
 end
 nvim_lsp["sumneko_lua"].setup {
@@ -221,7 +219,7 @@ nvim_lsp["sumneko_lua"].setup {
 local actions = require("telescope.actions")
 local telescope = require('telescope')
 
-telescope.setup{
+telescope.setup {
   defaults = {
     mappings = {
       i = {
@@ -229,29 +227,30 @@ telescope.setup{
       },
     },
     extensions = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
     }
   }
 }
 telescope.load_extension('fzf')
 require('lualine').setup()
 require('gitlinker').setup()
-require('nvim-autopairs').setup{}
+require('nvim-autopairs').setup {}
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
-require('which-key').setup{}
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+require('which-key').setup {}
 require "lsp_signature".setup()
 require("trouble").setup({})
 require("guess-indent").setup({})
 require('gitsigns').setup {
   on_attach = function(bufnr)
     local function map(mode, lhs, rhs, opts)
-      opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+      opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
       vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     end
+
     -- Navigation
     map('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
     map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
