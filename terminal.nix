@@ -20,6 +20,11 @@
     delta = {
       enable = true;
     };
+    extraConfig = {
+      push = {
+        rebase = true;
+      };
+    };
   };
 
   programs.zsh = {
