@@ -175,25 +175,27 @@ cmp.setup.cmdline(':', {
 local cmp_lsp = require('cmp_nvim_lsp')
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gd', vim.lsp.buf.definition(), opts)
-  buf_set_keymap('n', 'gy', vim.lsp.buf.declaration(), opts)
-  buf_set_keymap('n', 'K', vim.lsp.buf.hover(), opts)
-  buf_set_keymap('n', 'gi', vim.lsp.buf.implementation(), opts)
-  buf_set_keymap('n', '<leader>rn', vim.lsp.buf.rename(), opts)
-  buf_set_keymap('n', 'gr', vim.lsp.buf.references(), opts)
-  buf_set_keymap('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics(), opts)
-  buf_set_keymap('n', '[d', vim.lsp.diagnostic.goto_prev(), opts)
-  buf_set_keymap('n', ']d', vim.lsp.diagnostic.goto_next(), opts)
-  buf_set_keymap('n', '<space>q', vim.lsp.diagnostic.set_loclist(), opts)
-  buf_set_keymap("n", "<space>f", vim.lsp.buf.formatting(), opts)
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<leader>fo', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 local capabilities = cmp_lsp.default_capabilities()
@@ -206,6 +208,15 @@ for _, lsp in ipairs({"pyright", "tsserver", "sorbet"}) do
     }
   }
 end
+nvim_lsp["sumneko_lua"].setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    runtime = {
+      version = "LuaJIT"
+    }
+  }
+}
 
 local actions = require("telescope.actions")
 local telescope = require('telescope')
