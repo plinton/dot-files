@@ -7,7 +7,7 @@
     # The neovim ruby overrides the one specified in the shell. Great for plugins in ruby, but breaks sorbet's lookups
     withRuby = false;
     # Put some lua-based plugins here as sometimes runtimepath does not always pick them up
-    extraLuaPackages = with pkgs.lua51Packages; [ plenary-nvim gitsigns-nvim ];
+    extraLuaPackages = ps: [ ps.plenary-nvim ps.gitsigns-nvim ];
     extraConfig = "lua <<EOF\n" + builtins.readFile ./init.lua + "EOF\n";
     extraPackages = with pkgs; [
       nodePackages.typescript-language-server
@@ -27,7 +27,7 @@
       split-term-vim
       nvim-web-devicons
       lualine-nvim
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+      nvim-treesitter.withAllGrammars
       nvim-treesitter-context
       nvim-treesitter-refactor
       which-key-nvim
