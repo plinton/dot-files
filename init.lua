@@ -31,6 +31,7 @@ vim.opt.inccommand = "nosplit"
 vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
+require("catppuccin").setup()
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.cmd [[colorscheme catppuccin]]
 
@@ -206,14 +207,28 @@ for _, lsp in ipairs({ "pyright", "tsserver", "sorbet" }) do
     on_attach = on_attach,
   }
 end
-nvim_lsp["sumneko_lua"].setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
+
+require'lspconfig'.lua_ls.setup {
   settings = {
-    runtime = {
-      version = "LuaJIT"
-    }
-  }
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
 }
 
 local actions = require("telescope.actions")

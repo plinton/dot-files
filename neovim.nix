@@ -12,7 +12,7 @@
     extraPackages = with pkgs; [
       nodePackages.typescript-language-server
       pyright
-      sumneko-lua-language-server
+      lua-language-server
     ];
     plugins = with pkgs.vimPlugins; [
       gitsigns-nvim
