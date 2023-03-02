@@ -64,8 +64,6 @@ vim.keymap.set("n", "<leader>tq", "<cmd>TroubleToggle quickfix<cr>",
 vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
   { silent = true, noremap = true }
 )
-vim.g.copilot_no_tab_map = true
-vim.keymap.set('i', '<expr>', '<Plug>(vimrc:copilot-dummy-map) copilot#Accept("<Tab>")', { noremap = 'false' })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 vim.opt.clipboard = "unnamed,unnamedplus"
@@ -92,6 +90,11 @@ require 'nvim-treesitter.configs'.setup {
   }
 }
 
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+require("copilot_cmp").setup()
 local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 local cmp = require 'cmp'
@@ -108,6 +111,9 @@ cmp.setup {
     -- For luasnip user.
     { name = 'luasnip' },
 
+    -- copilot
+    { name = 'copilot' },
+
     -- For ultisnips user.
     -- { name = 'ultisnips' },
 
@@ -118,35 +124,9 @@ cmp.setup {
 
   },
   mapping = cmp.mapping.preset.insert({
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-g>'] = cmp.mapping(function(fallback)
-      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
-        true)
-    end),
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
@@ -209,6 +189,7 @@ for _, lsp in ipairs({ "pyright", "tsserver", "sorbet" }) do
 end
 
 require'lspconfig'.lua_ls.setup {
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
@@ -222,6 +203,7 @@ require'lspconfig'.lua_ls.setup {
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -250,7 +232,7 @@ telescope.setup {
   }
 }
 telescope.load_extension('fzf')
-require('lualine').setup()
+require('lualine').setup( {} )
 require('gitlinker').setup()
 require('nvim-autopairs').setup {}
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')

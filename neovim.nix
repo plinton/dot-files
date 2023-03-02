@@ -2,6 +2,7 @@
 
 {
   programs.neovim = {
+    defaultEditor = true;
     enable = true;
     withNodeJs = true;
     # The neovim ruby overrides the one specified in the shell. Great for plugins in ruby, but breaks sorbet's lookups
@@ -42,8 +43,9 @@
       cmp-treesitter
       cmp_luasnip
       cmp-cmdline
+      copilot-lua
+      copilot-cmp
       gitlinker-nvim
-      copilot-vim
       telescope-nvim
       telescope-fzf-native-nvim
       vim-oscyank
