@@ -4,7 +4,7 @@
 
   imports = [
     ./terminal.nix
-    ./neovim.nix
+    ./neovim/lite.nix
   ];
   home.username = "spin";
   home.homeDirectory = "/home/spin";

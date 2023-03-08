@@ -14,7 +14,7 @@ in
   imports = [
     ./terminal.nix
     ./kitty.nix
-    ./neovim.nix
+    ./neovim/full.nix
   ];
 
   programs.git = {

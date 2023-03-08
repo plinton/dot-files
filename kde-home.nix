@@ -6,7 +6,7 @@
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  imports = [ ./terminal.nix ./kitty.nix ./neovim.nix ./kde.nix ];
+  imports = [ ./terminal.nix ./kitty.nix ./neovim/full.nix ./kde.nix ];
   nixpkgs.config.allowUnfree = true;
   home.username = "paul";
   home.homeDirectory = "/home/paul";

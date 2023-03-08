@@ -28,7 +28,6 @@
       split-term-vim
       nvim-web-devicons
       lualine-nvim
-      nvim-treesitter.withAllGrammars
       nvim-treesitter-context
       nvim-treesitter-refactor
       which-key-nvim
