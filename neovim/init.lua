@@ -244,6 +244,9 @@ require('which-key').setup {}
 require "lsp_signature".setup()
 require("trouble").setup({})
 require("guess-indent").setup({})
+if os.getenv('OPENAI_API_KEY') then
+  require("chatgpt").setup({})
+end
 require('gitsigns').setup {
   on_attach = function(bufnr)
     local function map(mode, lhs, rhs, opts)

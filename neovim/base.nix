@@ -51,6 +51,7 @@
       catppuccin-nvim
       trouble-nvim
       guess-indent-nvim
+      ChatGPT-nvim
     ];
   };
 }
