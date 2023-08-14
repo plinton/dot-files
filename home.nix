@@ -4,7 +4,6 @@ let
     tdesktop
   ];
   common_pkgs = with pkgs; [
-    zoom-us
     lastpass-cli
     spotify-tui
     spotifyd
@@ -15,6 +14,7 @@ in
     ./terminal.nix
     ./kitty.nix
     ./neovim/full.nix
+    ./kids.nix
   ];
 
   programs.git = {
