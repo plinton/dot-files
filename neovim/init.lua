@@ -7,9 +7,9 @@ vim.opt.fileencodings = "utf-8"
 vim.opt.backspace = "indent,eol,start"
 
 -- Tabs. May be overridden by autocmd rules
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 0
-vim.opt.shiftwidth = 4
+--vim.opt.tabstop = 4
+--vim.opt.softtabstop = 0
+--vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 -- Searching
@@ -35,14 +35,15 @@ require("catppuccin").setup()
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.cmd [[colorscheme catppuccin]]
 
-vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
+vim.api.nvim_create_autocmd({'BufRead','BufNewFile'}, {
   pattern = '*.nix',
   callback = function() vim.bo.filetype = 'nix' end,
 })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  pattern = '*',
-  command = 'if v:event.operator is \'y\' && v:event.regname is \'\' | execute  \'OSCYankReg " \' | endif'
-})
+
+vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
+vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
+vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
+
 vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files() end)
 vim.keymap.set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end)
 vim.keymap.set('n', '<leader>fb', function() require('telescope.builtin').buffers() end)
@@ -69,6 +70,11 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 vim.opt.clipboard = "unnamed,unnamedplus"
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
+  modules = {},
+  ignore_install = {},
+  ensure_installed = {},
+  sync_install = false,
+  auto_install = false,
   highlight = {
     enable = true, -- false will disable the whole extension
   },
@@ -83,11 +89,19 @@ require 'nvim-treesitter.configs'.setup {
   },
   indent = {
     enable = true
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true,
   }
+}
+
+require('rainbow-delimiters.setup').setup {
+    strategy = {
+        -- ...
+    },
+    query = {
+        -- ...
+    },
+    highlight = {
+        -- ...
+    },
 }
 
 require("copilot").setup({
@@ -235,7 +249,7 @@ telescope.setup {
   }
 }
 telescope.load_extension('fzf')
-require('lualine').setup( {} )
+require('lualine').setup()
 require('gitlinker').setup()
 require('nvim-autopairs').setup {}
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')

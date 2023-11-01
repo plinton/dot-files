@@ -18,14 +18,13 @@
     plugins = with pkgs.vimPlugins; [
       gitsigns-nvim
       nvim-lspconfig
-      vim-surround
-      vim-fugitive
+      nvim-surround
+      #vim-fugitive
       vim-swap
       vim-matchup
-      nvim-ts-rainbow
+      rainbow-delimiters-nvim
       nvim-autopairs
       vim-illuminate
-      split-term-vim
       nvim-web-devicons
       lualine-nvim
       nvim-treesitter-context
@@ -47,7 +46,7 @@
       gitlinker-nvim
       telescope-nvim
       telescope-fzf-native-nvim
-      vim-oscyank
+      nvim-osc52
       catppuccin-nvim
       trouble-nvim
       guess-indent-nvim
