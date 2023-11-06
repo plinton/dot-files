@@ -40,6 +40,8 @@ vim.api.nvim_create_autocmd({'BufRead','BufNewFile'}, {
   callback = function() vim.bo.filetype = 'nix' end,
 })
 
+vim.cmd('autocmd FileType ruby setlocal indentkeys-=.')
+
 vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
 vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
 vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
@@ -89,20 +91,13 @@ require 'nvim-treesitter.configs'.setup {
   },
   indent = {
     enable = true
+  },
+  endwise = {
+    enable = true
   }
 }
 
-require('rainbow-delimiters.setup').setup {
-    strategy = {
-        -- ...
-    },
-    query = {
-        -- ...
-    },
-    highlight = {
-        -- ...
-    },
-}
+require('rainbow-delimiters.setup').setup { }
 
 require("copilot").setup({
   suggestion = { enabled = false },
@@ -198,7 +193,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = cmp_lsp.default_capabilities()
-for _, lsp in ipairs({ "pyright", "tsserver", "sorbet" }) do
+for _, lsp in ipairs({ "pyright", "tsserver", "ruby_ls" }) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = on_attach,
