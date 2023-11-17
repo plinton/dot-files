@@ -4,12 +4,17 @@
   programs.neovim = {
     defaultEditor = true;
     enable = true;
-    withNodeJs = true;
-    # The neovim ruby overrides the one specified in the shell. Great for plugins in ruby, but breaks sorbet's lookups
-    withRuby = true;
     # Put some lua-based plugins here as sometimes runtimepath does not always pick them up
     extraLuaPackages = ps: [ ps.plenary-nvim ps.gitsigns-nvim ];
-    extraConfig = "lua <<EOF\n" + builtins.readFile ./init.lua + "EOF\n";
+    extraConfig = ''
+      lua <<EOF
+      local tsserver_path = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server"
+      local typescript_path = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib"
+      local node_path = "${pkgs.nodejs}/bin/node"
+
+      ${builtins.readFile ./init.lua}
+      EOF
+    '';
     extraPackages = with pkgs; [
       nodePackages.typescript-language-server
       pyright
