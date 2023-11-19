@@ -27,10 +27,8 @@
       vim-swap
       vim-matchup
       rainbow-delimiters-nvim
-      nvim-autopairs
-      vim-illuminate
       nvim-web-devicons
-      lualine-nvim
+      mini-nvim
       nvim-treesitter-context
       nvim-treesitter-refactor
       nvim-treesitter-endwise

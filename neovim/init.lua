@@ -189,7 +189,7 @@ nvim_lsp.tsserver.setup {
   cmd = { tsserver_path, "--stdio", "--tsserver-path", typescript_path },
 }
 -- textDocument/diagnostic support until 0.10.0 is released
-_timers = {}
+local _timers = {}
 local function setup_diagnostics(client, buffer)
   if require("vim.lsp.diagnostic")._enable then
     return
@@ -288,11 +288,11 @@ telescope.setup {
   }
 }
 telescope.load_extension('fzf')
-require('lualine').setup()
+--require('lualine').setup()
+require('mini.statusline').setup()
+require('mini.pairs').setup()
+require('mini.cursorword').setup()
 require('gitlinker').setup()
-require('nvim-autopairs').setup {}
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
 require('which-key').setup {}
 require "lsp_signature".setup()
 require("trouble").setup({})
