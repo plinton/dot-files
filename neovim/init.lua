@@ -113,7 +113,7 @@ require 'nvim-treesitter.configs'.setup {
   },
   endwise = {
     enable = true
-  }
+  },
 }
 
 require('rainbow-delimiters.setup').setup { }
@@ -311,11 +311,11 @@ telescope.setup {
   }
 }
 telescope.load_extension('fzf')
---require('lualine').setup()
 require('mini.statusline').setup()
 require('mini.pairs').setup()
 require('mini.cursorword').setup()
 require('mini.surround').setup()
+require('mini.indentscope').setup()
 local miniclue = require('mini.clue')
 miniclue.setup({
   triggers = {
@@ -359,7 +359,7 @@ miniclue.setup({
     },
 })
 require('gitlinker').setup()
-require "lsp_signature".setup()
+require "lsp_signature".setup({})
 require("guess-indent").setup({})
 if os.getenv('OPENAI_API_KEY') then
   require("chatgpt").setup({})

@@ -28,7 +28,6 @@
       nvim-web-devicons
       mini-nvim
       nvim-treesitter-context
-      nvim-treesitter-refactor
       nvim-treesitter-endwise
       lsp_signature-nvim
       luasnip
