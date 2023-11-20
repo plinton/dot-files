@@ -23,16 +23,13 @@
     ];
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
-      nvim-surround
       vim-swap
-      vim-matchup
       rainbow-delimiters-nvim
       nvim-web-devicons
       mini-nvim
       nvim-treesitter-context
       nvim-treesitter-refactor
       nvim-treesitter-endwise
-      which-key-nvim
       lsp_signature-nvim
       luasnip
       friendly-snippets
