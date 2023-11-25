@@ -1,12 +1,12 @@
 { pkgs, ... }:
-let
-in
 {
   programs.kitty = {
     enable = true;
     settings = {
       shell = "zsh";
     };
+    font.name = "DroidSansMono";
+    font.size = 12;
     extraConfig = builtins.readFile (pkgs.fetchFromGitHub
       {
         owner = "catppuccin";

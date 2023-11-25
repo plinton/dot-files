@@ -349,21 +349,18 @@ miniclue.setup({
     { mode = 'x', keys = 'z' },
   },
   clues = {
-      -- Enhance this by adding descriptions for <Leader> mapping groups
-      miniclue.gen_clues.builtin_completion(),
-      miniclue.gen_clues.g(),
-      miniclue.gen_clues.marks(),
-      miniclue.gen_clues.registers(),
-      miniclue.gen_clues.windows(),
-      miniclue.gen_clues.z(),
-    },
+    -- Enhance this by adding descriptions for <Leader> mapping groups
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.marks(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.windows(),
+    miniclue.gen_clues.z(),
+  },
 })
 require('gitlinker').setup()
 require "lsp_signature".setup({})
 require("guess-indent").setup({})
-if os.getenv('OPENAI_API_KEY') then
-  require("chatgpt").setup({})
-end
 local gitsigns = require('gitsigns')
 gitsigns.setup {
   on_attach = function(bufnr)

@@ -21,7 +21,7 @@ in
     userName = "Paul Ellis Linton";
     userEmail = "plinton@musicalcomputer.com";
   };
-  # this symlinks the apps, which spotlight won't follow. Seed below
+  # this symlinks the apps, which spotlight won't follow. See below
   disabledModules = [ "targets/darwin/linkapps.nix" ];
 
   # try to get system packages into Applications
