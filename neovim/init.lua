@@ -1,10 +1,8 @@
+vim.loader.enable()
+
 -- Encoding
-vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 vim.opt.fileencodings = "utf-8"
-
--- Fix backspace indent
-vim.opt.backspace = "indent,eol,start"
 
 -- Tabs. May be overridden by autocmd rules
 vim.opt.expandtab = true
@@ -17,13 +15,10 @@ vim.opt.smartcase = true
 
 vim.opt.fileformats = "unix,dos,mac"
 
-vim.opt.lazyredraw = true
 vim.opt.undofile = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.list = true
-
-vim.opt.inccommand = "nosplit"
 
 vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
@@ -206,56 +201,8 @@ nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   cmd = { tsserver_path, "--stdio", "--tsserver-path", typescript_path },
 }
--- textDocument/diagnostic support until 0.10.0 is released
-local _timers = {}
-local function setup_diagnostics(client, buffer)
-  if require("vim.lsp.diagnostic")._enable then
-    return
-  end
 
-  local diagnostic_handler = function()
-    local params = vim.lsp.util.make_text_document_params(buffer)
-    client.request("textDocument/diagnostic", { textDocument = params }, function(err, result)
-      if err then
-        local err_msg = string.format("diagnostics error - %s", vim.inspect(err))
-        vim.lsp.log.error(err_msg)
-      end
-      local diagnostic_items = {}
-      if result then
-        diagnostic_items = result.items
-      end
-      vim.lsp.diagnostic.on_publish_diagnostics(
-        nil,
-        vim.tbl_extend("keep", params, { diagnostics = diagnostic_items }),
-        { client_id = client.id }
-      )
-    end)
-  end
-
-  diagnostic_handler() -- to request diagnostics on buffer when first attaching
-
-  vim.api.nvim_buf_attach(buffer, false, {
-    on_lines = function()
-      if _timers[buffer] then
-        vim.fn.timer_stop(_timers[buffer])
-      end
-      _timers[buffer] = vim.fn.timer_start(200, diagnostic_handler)
-    end,
-    on_detach = function()
-      if _timers[buffer] then
-        vim.fn.timer_stop(_timers[buffer])
-      end
-    end,
-  })
-end
-nvim_lsp.ruby_ls.setup {
-  capabilities = capabilities,
-  on_attach = function(client, buffer)
-    setup_diagnostics(client, buffer)
-    on_attach(client, buffer)
-  end,
-}
-for _, lsp in ipairs({ "pyright" }) do
+for _, lsp in ipairs({ "pyright", "sorbet" }) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = on_attach,

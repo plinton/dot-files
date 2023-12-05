@@ -19,7 +19,6 @@
       nodePackages.typescript-language-server
       pyright
       lua-language-server
-      ruby-lsp
     ];
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
