@@ -83,7 +83,6 @@ vim.keymap.set("n", "gR", function () trouble.toggle("lsp_references") end,
 )
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
-vim.opt.clipboard = "unnamed,unnamedplus"
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
   modules = {},
@@ -109,6 +108,17 @@ require 'nvim-treesitter.configs'.setup {
   endwise = {
     enable = true
   },
+  textobjects = {
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>>"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader><"] = "@parameter.inner",
+      },
+    }
+  }
 }
 
 require('rainbow-delimiters.setup').setup { }

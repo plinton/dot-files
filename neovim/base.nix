@@ -22,12 +22,12 @@
     ];
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
-      vim-swap
       rainbow-delimiters-nvim
       nvim-web-devicons
       mini-nvim
       nvim-treesitter-context
       nvim-treesitter-endwise
+      nvim-treesitter-textobjects
       lsp_signature-nvim
       luasnip
       friendly-snippets
