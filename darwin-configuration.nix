@@ -36,6 +36,13 @@
     experimental-features = nix-command flakes
   '';
 
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "zap";
+    brews = [
+      "firefoxpwa"
+    ];
+  };
 
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
