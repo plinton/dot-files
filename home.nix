@@ -7,6 +7,7 @@ let
     lastpass-cli
     spotify-tui
     spotifyd
+    (nerdfonts.override { fonts = [ "DroidSansMono" ]; })
   ];
 in
 {
@@ -21,6 +22,9 @@ in
     userName = "Paul Ellis Linton";
     userEmail = "plinton@musicalcomputer.com";
   };
+
+  fonts.fontconfig.enable = true;
+
   # this symlinks the apps, which spotlight won't follow. See below
   disabledModules = [ "targets/darwin/linkapps.nix" ];
 

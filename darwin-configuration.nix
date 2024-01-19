@@ -44,10 +44,6 @@
     ];
   };
 
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "DroidSansMono" ]; })
-  ];
   programs.zsh.enable = true;
 
   # Add ability to used TouchID for sudo authentication
