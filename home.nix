@@ -3,6 +3,10 @@ let
   linux_only_pkgs = with pkgs; [
     tdesktop
   ];
+  darwin_only_pkgs = with pkgs; [
+    iina
+    rectangle
+  ];
   common_pkgs = with pkgs; [
     lastpass-cli
     spotify-tui
@@ -30,7 +34,7 @@ in
 
   home.packages =
     if pkgs.stdenv.isDarwin
-    then common_pkgs
+    then common_pkgs ++ darwin_only_pkgs
     else linux_only_pkgs ++ common_pkgs;
 
   programs.starship = {
