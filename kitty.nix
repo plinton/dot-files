@@ -7,6 +7,14 @@
     };
     font.name = "DroidSansMono";
     font.size = 12;
+    darwinLaunchOptions = [ "--single-instance" ];
+    shellIntegration = {
+      enableZshIntegration = true;
+    };
+    settings = {
+      tab_bar_style = "powerline";
+
+    };
     extraConfig = builtins.readFile (pkgs.fetchFromGitHub
       {
         owner = "catppuccin";
