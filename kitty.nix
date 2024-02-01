@@ -11,9 +11,12 @@
     shellIntegration = {
       enableZshIntegration = true;
     };
+    keybindings = {
+      "ctrl+shift+>" = "next_window";
+      "ctrl+shift+<" = "previous_window";
+    };
     settings = {
       tab_bar_style = "powerline";
-
     };
     extraConfig = builtins.readFile (pkgs.fetchFromGitHub
       {
