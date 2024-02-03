@@ -41,6 +41,7 @@
     onActivation.cleanup = "zap";
     brews = [
       "firefoxpwa"
+      "ollama"
     ];
   };
 
