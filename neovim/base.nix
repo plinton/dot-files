@@ -4,6 +4,12 @@
   programs.neovim = {
     defaultEditor = true;
     enable = true;
+
+    # plugins are all in lua (or vimscript), language servers are
+    # external and the extra runtimes mess with paths inside of nvim
+    withRuby = false;
+    withPython3 = false;
+    withNodeJs = false;
     # Put some lua-based plugins here as sometimes runtimepath does not always pick them up
     extraLuaPackages = ps: [ ps.plenary-nvim ps.gitsigns-nvim ];
     extraConfig = ''
