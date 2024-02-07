@@ -47,13 +47,14 @@
       cmp-cmdline
       copilot-lua
       copilot-cmp
-      gitlinker-nvim
-      telescope-nvim
-      telescope-fzf-native-nvim
+      fzf-lua
       nvim-osc52
       catppuccin-nvim
       trouble-nvim
       guess-indent-nvim
+      which-key-nvim
+      indent-blankline-nvim
+
     ];
   };
 }

@@ -24,18 +24,20 @@ vim.g.completeopt = 'menu,menuone,noselect'
 vim.g.mapleader = ','
 
 require("catppuccin").setup({
+  flavour = "mocha",
   integrations = {
     treesitter_context = true,
     lsp_trouble = true,
     treesitter = true,
     cmp = true,
-    mini = {
+    gitsigns = true,
+    indent_blankline = {
       enabled = true,
-      indentscope = "lavender"
+      scope_color = "sapphire",
+      colored_indent_levels = true,
     },
   }
 })
-vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.cmd [[colorscheme catppuccin]]
 
 local function default_key_opts(other_opts)
@@ -55,14 +57,15 @@ local trouble = require("trouble")
 trouble.setup({
   mode = "document_diagnostics"
 })
-local telescope_builtin = require('telescope.builtin')
+local fzf_lua = require('fzf-lua')
+fzf_lua.setup({})
 vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
 vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
 vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
 
-vim.keymap.set('n', '<leader>ff', telescope_builtin.find_files, default_key_opts({desc = "find files"}))
-vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, default_key_opts({desc = "live grep"}))
-vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, default_key_opts({desc = "find buffers"}))
+vim.keymap.set('n', '<leader>ff', fzf_lua.files, default_key_opts({desc = "find files"}))
+vim.keymap.set('n', '<leader>fg', fzf_lua.live_grep_native, default_key_opts({desc = "live grep"}))
+vim.keymap.set('n', '<leader>fb', fzf_lua.buffers, default_key_opts({desc = "find buffers"}))
 vim.keymap.set("n", "<leader>tt", trouble.toggle,
   default_key_opts({desc = "toggle trouble"})
 )
@@ -244,80 +247,15 @@ require'lspconfig'.lua_ls.setup {
   },
 }
 
-local actions = require("telescope.actions")
-local telescope = require('telescope')
-local trouble_telescope = require("trouble.providers.telescope")
 
-telescope.setup {
-  defaults = {
-    mappings = {
-      i = {
-        ["<esc>"] = actions.close,
-        ["<c-t>"] = trouble_telescope.open_with_trouble
-      },
-      n = {
-        ["<c-t>"] = trouble_telescope.open_with_trouble
-      }
-    },
-    extensions = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-    }
-  }
-}
-telescope.load_extension('fzf')
 require('mini.statusline').setup()
 require('mini.pairs').setup()
 require('mini.cursorword').setup()
 require('mini.surround').setup()
-require('mini.indentscope').setup()
-local miniclue = require('mini.clue')
-miniclue.setup({
-  triggers = {
-    -- Leader triggers
-    { mode = 'n', keys = '<Leader>' },
-    { mode = 'x', keys = '<Leader>' },
-    -- Built-in completion
-    { mode = 'i', keys = '<C-x>' },
-
-    -- `g` key
-    { mode = 'n', keys = 'g' },
-    { mode = 'x', keys = 'g' },
-
-    -- Marks
-    { mode = 'n', keys = "'" },
-    { mode = 'n', keys = '`' },
-    { mode = 'x', keys = "'" },
-    { mode = 'x', keys = '`' },
-
-    -- Registers
-    { mode = 'n', keys = '"' },
-    { mode = 'x', keys = '"' },
-    { mode = 'i', keys = '<C-r>' },
-    { mode = 'c', keys = '<C-r>' },
-
-    -- Window commands
-    { mode = 'n', keys = '<C-w>' },
-
-    -- `z` key
-    { mode = 'n', keys = 'z' },
-    { mode = 'x', keys = 'z' },
-  },
-  clues = {
-    -- Enhance this by adding descriptions for <Leader> mapping groups
-    miniclue.gen_clues.builtin_completion(),
-    miniclue.gen_clues.g(),
-    miniclue.gen_clues.marks(),
-    miniclue.gen_clues.registers(),
-    miniclue.gen_clues.windows(),
-    miniclue.gen_clues.z(),
-  },
-})
-require('gitlinker').setup()
 require "lsp_signature".setup({})
 require("guess-indent").setup({})
+require("which-key").setup {}
+require('ibl').setup({})
 local gitsigns = require('gitsigns')
 gitsigns.setup {
   on_attach = function(bufnr)
