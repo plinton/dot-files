@@ -197,11 +197,6 @@ local on_attach = function(client, buffer)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, default_key_opts({desc = "show hover information"}))
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, default_key_opts({desc = "go to implementation"}))
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, default_key_opts({desc = "show signature help"}))
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, default_key_opts({desc = "add workspace folder"}))
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, default_key_opts({desc = "remove workspace folder"}))
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, default_key_opts({desc = "list workspace folders"}))
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, default_key_opts({desc = "go to type definition"}))
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, default_key_opts({desc = "rename symbol"}))
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, default_key_opts({desc = "code action"}))
@@ -251,14 +246,29 @@ require'lspconfig'.lua_ls.setup {
 }
 
 
-require('mini.statusline').setup()
-require('mini.pairs').setup()
-require('mini.cursorword').setup()
-require('mini.surround').setup()
-require "lsp_signature".setup({})
-require("guess-indent").setup({})
-require("which-key").setup {}
+local lualine = require('lualine')
+lualine.setup {
+  options = {
+    theme = 'catppuccin',
+  },
+}
+
 require('ibl').setup({})
+
+require('illuminate').configure({})
+
+require "lsp_signature".setup({})
+
+require("guess-indent").setup({})
+
+require("which-key").setup {}
+require('nvim-autopairs').setup({})
+-- If you want insert `(` after select function or method item
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 local gitsigns = require('gitsigns')
 gitsigns.setup {
   on_attach = function(bufnr)

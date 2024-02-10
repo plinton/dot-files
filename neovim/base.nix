@@ -31,8 +31,10 @@
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
       rainbow-delimiters-nvim
+      nvim-autopairs
+      lualine-nvim
+      vim-illuminate
       nvim-web-devicons
-      mini-nvim
       nvim-treesitter-context
       nvim-treesitter-endwise
       nvim-treesitter-textobjects
