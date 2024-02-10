@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 
 {
+
+  home.sessionVariables = {
+    TSSERVER_PATH = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server";
+    TYPESCRIPT_PATH = "${pkgs.nodePackages.typescript}/lib/node_modeules/typescript/lib";
+    NODE_PATH = "${pkgs.nodejs}/bin/node";
+  };
   programs.neovim = {
     defaultEditor = true;
     enable = true;
@@ -14,10 +20,6 @@
     extraLuaPackages = ps: [ ps.plenary-nvim ps.gitsigns-nvim ];
     extraConfig = ''
       lua <<EOF
-      local tsserver_path = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server"
-      local typescript_path = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib"
-      local node_path = "${pkgs.nodejs}/bin/node"
-
       ${builtins.readFile ./init.lua}
       EOF
     '';
