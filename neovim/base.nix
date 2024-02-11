@@ -3,9 +3,9 @@
 {
 
   home.sessionVariables = {
-    TSSERVER_PATH = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server";
-    TYPESCRIPT_PATH = "${pkgs.nodePackages.typescript}/lib/node_modeules/typescript/lib";
-    NODE_PATH = "${pkgs.nodejs}/bin/node";
+    NVIM_TSSERVER_PATH = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server";
+    NVIM_TYPESCRIPT_PATH = "${pkgs.nodePackages.typescript}/lib/node_modeules/typescript/lib";
+    NVIM_NODE_PATH = "${pkgs.nodejs}/bin/node";
   };
   programs.neovim = {
     defaultEditor = true;

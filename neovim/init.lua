@@ -126,7 +126,7 @@ require 'nvim-treesitter.configs'.setup {
 
 require('rainbow-delimiters.setup').setup { }
 
-local node_path = os.getenv("NODE_PATH")
+local node_path = os.getenv("NVIM_NODE_PATH")
 require("copilot").setup({
   suggestion = { enabled = false },
   panel = { enabled = false },
@@ -205,8 +205,8 @@ local on_attach = function(client, buffer)
 end
 
 local capabilities = cmp_lsp.default_capabilities()
-local tsserver_path = os.getenv("TSSERVER_PATH")
-local typescript_path = os.getenv("TYPESCRIPT_PATH")
+local tsserver_path = os.getenv("NVIM_TSSERVER_PATH")
+local typescript_path = os.getenv("NVIM_TYPESCRIPT_PATH")
 nvim_lsp.tsserver.setup {
   capabilities = capabilities,
   on_attach = on_attach,
