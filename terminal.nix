@@ -12,9 +12,19 @@
       enable = true;
     };
     extraConfig = {
-      push = {
-        rebase = true;
+      init.defaultBranch = "main";
+      push.default = "current";
+      pull.rebase = true;
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+        updateRefs = true;
       };
+      merge.conflictStyle = "zdiff3";
+      rerere.enabled = true;
+      diff.algorithm = "histogram";
+      branch.sort = "committerdate";
+      tag.sort = "taggerdate";
     };
   };
   programs.jq = {

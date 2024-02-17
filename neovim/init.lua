@@ -246,8 +246,7 @@ require'lspconfig'.lua_ls.setup {
 }
 
 
-local lualine = require('lualine')
-lualine.setup {
+require('lualine').setup {
   options = {
     theme = 'catppuccin',
   },
