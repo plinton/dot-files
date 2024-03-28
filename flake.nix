@@ -33,15 +33,6 @@
         x86_64-darwin = inputs.nixpkgs-unstable.legacyPackages.x86_64-darwin.nixpkgs-fmt;
       };
 
-      homeConfigurations = rec {
-        spin = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
-          modules = [
-            ./spin-home.nix
-          ];
-        };
-      };
-
       nixosConfigurations.mr-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         #specialArgs = attrs;
