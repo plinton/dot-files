@@ -21,8 +21,6 @@
     teams
     bind
     lastpass-cli
-    spotify-tui
-    spotifyd
   ];
 
   programs.starship = {

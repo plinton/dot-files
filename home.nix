@@ -8,8 +8,6 @@ let
   ];
   common_pkgs = with pkgs; [
     lastpass-cli
-    spotify-tui
-    spotifyd
     (nerdfonts.override { fonts = [ "DroidSansMono" ]; })
   ];
 in
