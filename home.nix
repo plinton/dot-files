@@ -15,10 +15,10 @@ let
 in
 {
   imports = [
-    ./terminal.nix
-    ./kitty.nix
-    ./neovim/full.nix
-    ./kids.nix
+    ./modules/terminal.nix
+    ./modules/kitty.nix
+    ./modules/neovim/full.nix
+    ./modules/kids.nix
     ./modules/raycast.nix
   ];
 
