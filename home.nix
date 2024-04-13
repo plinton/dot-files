@@ -5,7 +5,6 @@ let
   ];
   darwin_only_pkgs = with pkgs; [
     iina
-    rectangle
   ];
   common_pkgs = with pkgs; [
     lastpass-cli
@@ -20,7 +19,7 @@ in
     ./kitty.nix
     ./neovim/full.nix
     ./kids.nix
-    ./trampoline-apps.nix
+    ./modules/raycast.nix
   ];
 
   programs.git = {
