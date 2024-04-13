@@ -5,6 +5,6 @@
     nsnake
   ];
   programs.zsh = {
-    initExtra = 'autoload -Uz tetriscurses'
+    initExtra = "autoload -Uz tetriscurses";
   };
 }
