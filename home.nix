@@ -8,7 +8,6 @@ let
   ];
   common_pkgs = with pkgs; [
     lastpass-cli
-    (nerdfonts.override { fonts = [ "DroidSansMono" ]; })
   ];
 in
 {
