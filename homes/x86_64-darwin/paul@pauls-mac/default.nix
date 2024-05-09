@@ -12,11 +12,11 @@ let
 in
 {
   imports = [
-    ./modules/terminal.nix
-    ./modules/kitty.nix
-    ./modules/neovim/full.nix
-    ./modules/kids.nix
-    ./modules/raycast.nix
+    ./../../../modules/home/terminal
+    ./../../../modules/home/kitty
+    ./../../../modules/home/neovim/full.nix
+    ./../../../modules/home/kids
+    ./../../../modules/home/raycast
   ];
 
   programs.git = {

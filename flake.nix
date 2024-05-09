@@ -38,7 +38,7 @@
         #specialArgs = attrs;
         modules = [
           # main configuration
-          ./kde-nixos-configuration.nix
+          ./sysmtems/x86_64-linux/mr-laptop
 
           home-manager.nixosModules.home-manager
           {
@@ -46,7 +46,7 @@
             # `home-manager` config
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.paul = import ./kde-home.nix;
+            home-manager.users.paul = import (./homes/x86_64-linux + "/paul@mr-laptop");
           }
         ];
       };
@@ -56,7 +56,7 @@
           system = "x86_64-darwin";
           modules = attrValues self.darwinModules ++ [
             # Main `nix-darwin` config
-            ./darwin-configuration.nix
+            ./systems/x86_64-darwin/pauls-mac
             # `home-manager` module
             home-manager.darwinModules.home-manager
             {
@@ -64,7 +64,7 @@
               # `home-manager` config
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.paul = import ./home.nix;
+              home-manager.users.paul = import (./homes/x86_64-darwin + "/paul@pauls-mac");
             }
           ];
         };

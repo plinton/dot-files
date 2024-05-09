@@ -4,7 +4,7 @@
   users.users.paul.home = /Users/paul;
 
   imports = [
-    ./modules/ollama.nix
+    ./../../../modules/darwin/ollama
   ];
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;

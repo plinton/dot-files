@@ -7,10 +7,10 @@
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   imports = [
-    ./modules/terminal.nix
-    ./modules/kitty.nix
-    ./modules/neovim/full.nix
-    ./modules/kde.nix
+    ./../../../modules/home/terminal
+    ./../../../modules/home/kitty
+    ./../../../modules/home/neovim/full
+    ./../../../modules/home/kde
   ];
   nixpkgs.config.allowUnfree = true;
   home.username = "paul";
