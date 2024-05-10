@@ -1,14 +1,5 @@
 { config, pkgs, nixpkgs, lib, ... }:
 let
-  linux_only_pkgs = with pkgs; [
-    tdesktop
-  ];
-  darwin_only_pkgs = with pkgs; [
-    iina
-  ];
-  common_pkgs = with pkgs; [
-    lastpass-cli
-  ];
 in
 {
   imports = [
@@ -28,10 +19,10 @@ in
 
   # N.B. The user will be defined in the flake
 
-  home.packages =
-    if pkgs.stdenv.isDarwin
-    then common_pkgs ++ darwin_only_pkgs
-    else linux_only_pkgs ++ common_pkgs;
+  home.packages = with pkgs; [
+    lastpass-cli
+    iina
+  ];
 
   programs.starship = {
     enable = true;
