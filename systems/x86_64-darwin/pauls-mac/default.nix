@@ -8,8 +8,8 @@
   ];
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+  nix.optimise.automatic = true;
   nix.extraOptions = ''
-    auto-optimise-store = true
     experimental-features = nix-command flakes
   '';
 
