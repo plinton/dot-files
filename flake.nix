@@ -38,7 +38,7 @@
         #specialArgs = attrs;
         modules = [
           # main configuration
-          ./sysmtems/x86_64-linux/mr-laptop
+          ./systems/x86_64-linux/mr-laptop
 
           home-manager.nixosModules.home-manager
           {
