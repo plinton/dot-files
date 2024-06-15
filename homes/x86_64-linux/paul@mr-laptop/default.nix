@@ -22,16 +22,11 @@
     bind
     lastpass-cli
   ];
-
-  programs.starship = {
+  plinton.kitty.enable = true;
+  plinton.kde.enable = true;
+  plinton.terminal = {
     enable = true;
-    enableZshIntegration = true;
-    settings = {
-      add_newline = false;
-      line_break = {
-        disabled = true;
-      };
-    };
+    starship = true;
   };
 
   # This value determines the Home Manager release that your

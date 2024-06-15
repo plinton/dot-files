@@ -7,15 +7,14 @@
 let
   inherit (lib) types;
 
-  cfg = config.services.ollama;
+  cfg = config.plinton.services.ollama;
 in
 {
   options = {
-    services.ollama = {
+    plinton.services.ollama = {
       enable = lib.mkEnableOption (
         "Server for local large language models"
       );
-      package = lib.mkPackageOption pkgs "ollama" { };
     };
   };
 

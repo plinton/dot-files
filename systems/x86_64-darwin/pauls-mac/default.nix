@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   users.users.paul.home = /Users/paul;
@@ -24,11 +24,12 @@
     ];
   };
 
-  programs.zsh.enable = true;
-
-  services.ollama = {
+  plinton.services.ollama = {
     enable = true;
   };
+  # note: this is the nix-darwin option, which sets the PATH and such
+  # but is not where confiugration happens
+  programs.zsh.enable = true;
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;

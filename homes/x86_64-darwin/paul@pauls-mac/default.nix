@@ -1,11 +1,11 @@
-{ config, pkgs, nixpkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
 in
 {
   imports = [
     ./../../../modules/home/terminal
     ./../../../modules/home/kitty
-    ./../../../modules/home/neovim/full.nix
+    ./../../../modules/home/neovim
     ./../../../modules/home/kids
     ./../../../modules/home/raycast
   ];
@@ -13,6 +13,16 @@ in
   programs.git = {
     userName = "Paul Ellis Linton";
     userEmail = "plinton@musicalcomputer.com";
+  };
+  plinton.kitty.enable = true;
+  plinton.kids.enable = true;
+  plinton.terminal = {
+    enable = true;
+    starship = true;
+  };
+  plinton.neovim = {
+    enable = true;
+    fullGrammars = true;
   };
 
   fonts.fontconfig.enable = true;
@@ -23,17 +33,6 @@ in
     lastpass-cli
     iina
   ];
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      add_newline = false;
-      line_break = {
-        disabled = true;
-      };
-    };
-  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
