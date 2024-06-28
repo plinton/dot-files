@@ -188,9 +188,6 @@ local cmp_lsp = require('cmp_nvim_lsp')
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, buffer)
 
-  --Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   -- Mappings.
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, default_key_opts({desc = "go to declaration"}))
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, default_key_opts({desc = "go to definition"}))
@@ -210,7 +207,11 @@ local typescript_path = os.getenv("NVIM_TYPESCRIPT_PATH")
 nvim_lsp.tsserver.setup {
   capabilities = capabilities,
   on_attach = on_attach,
-  cmd = { tsserver_path, "--stdio", "--tsserver-path", typescript_path },
+  cmd = { tsserver_path, "--stdio" },
+  init_options = {
+    hostInfo = 'neovim',
+    typescript = { fallbackPath = typescript_path },
+  }
 }
 
 for _, lsp in ipairs({ "pyright", "sorbet" }) do
