@@ -29,11 +29,6 @@ in
 
   # N.B. The user will be defined in the flake
 
-  home.packages = with pkgs; [
-    lastpass-cli
-    iina
-  ];
-
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
