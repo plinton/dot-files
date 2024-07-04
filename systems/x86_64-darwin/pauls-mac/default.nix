@@ -21,6 +21,7 @@
     ];
     casks = [
       "psst"
+      "thunderbird"
     ];
   };
 
