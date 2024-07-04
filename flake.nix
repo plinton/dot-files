@@ -11,12 +11,16 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0-rc1.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Other sources
 
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, lix-module, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -57,6 +61,8 @@
           modules = attrValues self.darwinModules ++ [
             # Main `nix-darwin` config
             ./systems/x86_64-darwin/pauls-mac
+            # lix-module
+            lix-module.nixosModules.default
             # `home-manager` module
             home-manager.darwinModules.home-manager
             {
