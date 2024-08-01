@@ -23,6 +23,11 @@ let
       embedded-template
     ]))
   ];
+  python-lsp = pkgs.python3.withPackages (ps: with ps; [
+    python-lsp-server
+    python-lsp-ruff
+    pylsp-mypy
+  ]);
 in
 {
   options.plinton.neovim = {
@@ -35,7 +40,9 @@ in
       NVIM_TSSERVER_PATH = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server";
       NVIM_TYPESCRIPT_PATH = "${pkgs.nodePackages.typescript}/lib/node_modeules/typescript/lib";
       NVIM_NODE_PATH = "${pkgs.nodejs}/bin/node";
+
     };
+
     programs.neovim = {
       defaultEditor = true;
       enable = true;
@@ -54,8 +61,8 @@ in
       '';
       extraPackages = with pkgs; [
         nodePackages.typescript-language-server
-        pyright
         lua-language-server
+        python-lsp
       ];
       plugins = with pkgs.vimPlugins; [
         nvim-lspconfig

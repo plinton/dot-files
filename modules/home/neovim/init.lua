@@ -213,8 +213,25 @@ nvim_lsp.tsserver.setup {
     typescript = { fallbackPath = typescript_path },
   }
 }
+nvim_lsp.pylsp.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    pylsp = {
+      plugins = {
+        pylsp_mypy = {
+          enabled = true,
+          live_mode = true,
+        },
+        ruff = {
+          enabled = true,
+        },
+      },
+    },
+  }
+}
 
-for _, lsp in ipairs({ "pyright", "sorbet" }) do
+for _, lsp in ipairs({ "sorbet" }) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = on_attach,
