@@ -54,11 +54,7 @@ in
       withNodeJs = false;
       # Put some lua-based plugins here as sometimes runtimepath does not always pick them up
       extraLuaPackages = ps: [ ps.plenary-nvim ps.gitsigns-nvim ];
-      extraConfig = ''
-        lua <<EOF
-        ${builtins.readFile ./init.lua}
-        EOF
-      '';
+      extraLuaConfig = builtins.readFile ./init.lua;
       extraPackages = with pkgs; [
         nodePackages.typescript-language-server
         lua-language-server
