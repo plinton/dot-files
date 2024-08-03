@@ -6,7 +6,6 @@ in {
   };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "DroidSansMono" ]; })
     ];
     fonts.fontconfig.enable = true;
     programs.kitty = {
@@ -14,8 +13,11 @@ in {
       settings = {
         shell = "zsh";
       };
-      font.name = "DroidSansMono";
-      font.size = 12;
+      font = {
+        package = (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; });
+        name = "DroidSansMono Nerd Font Mono";
+        size = 12;
+      };
       darwinLaunchOptions = [ "--single-instance" ];
       shellIntegration = {
         enableZshIntegration = true;
