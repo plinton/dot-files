@@ -23,6 +23,9 @@
       "psst"
       "thunderbird"
     ];
+    taps = [
+      "homebrew/services"
+    ];
   };
 
   plinton.services.ollama = {
