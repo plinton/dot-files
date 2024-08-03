@@ -124,6 +124,11 @@ require 'nvim-treesitter.configs'.setup {
   }
 }
 
+require'treesitter-context'.setup{
+  max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
+  multiline_threshold = 3, -- Maximum number of lines to show for a single context
+}
+
 require('rainbow-delimiters.setup').setup { }
 
 local node_path = os.getenv("NVIM_NODE_PATH")
@@ -184,24 +189,44 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local cmp_lsp = require('cmp_nvim_lsp')
 local nvim_lsp = require('lspconfig')
-local on_attach = function(client, buffer)
+require('lspsaga').setup({
+  symbol_in_winbar = {
+    enable = false,
+  },
+  definition = {
+    keys = {
+      split = "<C-s>",
+      vsplit = "<C-v>",
+    },
+  },
+  finder = {
+    keys = {
+      split = "<C-s>",
+      vsplit = "<C-v>",
+    },
+  },
+  lightbulb = {
+    virtual_text = false,
+  },
+})
+local on_attach = function(clent, buffer)
 
   -- Mappings.
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, default_key_opts({desc = "go to declaration"}))
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, default_key_opts({desc = "go to definition"}))
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, default_key_opts({desc = "show hover information"}))
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, default_key_opts({desc = "go to implementation"}))
+  vim.keymap.set('n', 'pd', ':Lspsaga peek_definition<cr>', default_key_opts({desc = "go to definition"}))
+  vim.keymap.set('n', 'K', ':Lspsaga hover_doc', default_key_opts({desc = "show hover information"}))
+  vim.keymap.set('n', 'gi', ':Lspsaga finder imp<cr>', default_key_opts({desc = "go to implementation"}))
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, default_key_opts({desc = "show signature help"}))
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, default_key_opts({desc = "go to type definition"}))
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, default_key_opts({desc = "rename symbol"}))
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, default_key_opts({desc = "code action"}))
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, default_key_opts({desc = "go to references"}))
+  vim.keymap.set('n', 'gr', ':Lspsaga finder ref<cr>', default_key_opts({desc = "go to references"}))
   vim.keymap.set('n', '<leader>fo', function() vim.lsp.buf.format { async = true } end, {noremap = true, desc = "format buffer"})
 end
 
-local capabilities = cmp_lsp.default_capabilities()
+local capabilities = require('nvim_cmp_lsp').default_capabilities()
 local tsserver_path = os.getenv("NVIM_TSSERVER_PATH")
 local typescript_path = os.getenv("NVIM_TYPESCRIPT_PATH")
 nvim_lsp.tsserver.setup {
