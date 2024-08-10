@@ -83,6 +83,7 @@ in
         cmp-cmdline
         copilot-lua
         copilot-cmp
+        lsp-format-nvim
         fzf-lua
         nvim-osc52
         catppuccin-nvim

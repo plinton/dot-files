@@ -211,7 +211,9 @@ require('lspsaga').setup({
     virtual_text = false,
   },
 })
-local on_attach = function(clent, buffer)
+local lsp_format = require('lsp-format')
+lsp_format.setup({})
+local on_attach = function(client, buffer)
 
   -- Mappings.
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, default_key_opts({desc = "go to declaration"}))
@@ -225,6 +227,7 @@ local on_attach = function(clent, buffer)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, default_key_opts({desc = "code action"}))
   vim.keymap.set('n', 'gr', ':Lspsaga finder ref<cr>', default_key_opts({desc = "go to references"}))
   vim.keymap.set('n', '<leader>fo', function() vim.lsp.buf.format { async = true } end, {noremap = true, desc = "format buffer"})
+  lsp_format.on_attach(client, buffer)
 end
 
 local tsserver_path = os.getenv("NVIM_TSSERVER_PATH")
