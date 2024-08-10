@@ -189,6 +189,7 @@ cmp.setup.cmdline(':', {
   })
 })
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local nvim_lsp = require('lspconfig')
 require('lspsaga').setup({
   symbol_in_winbar = {
@@ -226,7 +227,6 @@ local on_attach = function(clent, buffer)
   vim.keymap.set('n', '<leader>fo', function() vim.lsp.buf.format { async = true } end, {noremap = true, desc = "format buffer"})
 end
 
-local capabilities = require('nvim_cmp_lsp').default_capabilities()
 local tsserver_path = os.getenv("NVIM_TSSERVER_PATH")
 local typescript_path = os.getenv("NVIM_TYPESCRIPT_PATH")
 nvim_lsp.tsserver.setup {
