@@ -15,7 +15,7 @@ in {
       };
       font = {
         package = (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; });
-        name = "DroidSansMono Nerd Font Mono";
+        name = "DroidSansM Nerd Font Mono";
         size = 12;
       };
       darwinLaunchOptions = [ "--single-instance" ];
