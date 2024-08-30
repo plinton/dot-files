@@ -8,6 +8,7 @@ in
     ./../../../modules/home/neovim
     ./../../../modules/home/kids
     ./../../../modules/home/raycast
+    ./../../../modules/home/wezterm
   ];
 
   programs.git = {
@@ -15,6 +16,7 @@ in
     userEmail = "plinton@musicalcomputer.com";
   };
   plinton.kitty.enable = true;
+  plinton.wezterm.enable = true;
   plinton.kids.enable = true;
   plinton.terminal = {
     enable = true;

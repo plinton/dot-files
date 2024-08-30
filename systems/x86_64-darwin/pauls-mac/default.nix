@@ -5,6 +5,7 @@
 
   imports = [
     ./../../../modules/darwin/ollama
+    ./../../../modules/darwin/wezterm
   ];
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -31,6 +32,8 @@
   plinton.services.ollama = {
     enable = true;
   };
+  plinton.wezterm.enable = true;
+
   # note: this is the nix-darwin option, which sets the PATH and such
   # but is not where confiugration happens
   programs.zsh.enable = true;
