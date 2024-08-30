@@ -9,9 +9,12 @@ local config = wezterm.config_builder()
 -- For example, changing the color scheme:
 config.color_scheme = 'Catppuccin Mocha'
 
---config.tab_bar_at_bottom = true
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
+-- Disable ligatures
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+
+config.send_composed_key_when_left_alt_is_pressed = true
 
 -- and finally, return the configuration to wezterm
 return config
