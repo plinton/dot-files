@@ -23,7 +23,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    programs.wezterm.enable = cfg.enable && !cfg.use_homebrew;
-    home.file.".config/wezterm/wezterm.lua".source = ./wezterm.lua;
+
+    programs.wezterm = lib.mkIf (!cfg.use_homebrew) {
+      enable = true;
+      extraConfig = builtins.readFile ./wezterm.lua;
+      enableZshIntegration = true;
+    };
+    home.file.".config/wezterm/wezterm.lua" = lib.mkIf cfg.use_homebrew {
+      source = ./wezterm.lua;
+    };
   };
 }
