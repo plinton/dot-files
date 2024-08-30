@@ -32,7 +32,10 @@
   plinton.services.ollama = {
     enable = true;
   };
-  plinton.wezterm.enable = true;
+  plinton.wezterm = {
+    enable = true;
+    use_homebrew = true;
+  };
 
   # note: this is the nix-darwin option, which sets the PATH and such
   # but is not where confiugration happens

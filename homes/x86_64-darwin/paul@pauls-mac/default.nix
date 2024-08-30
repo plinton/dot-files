@@ -16,7 +16,10 @@ in
     userEmail = "plinton@musicalcomputer.com";
   };
   plinton.kitty.enable = true;
-  plinton.wezterm.enable = true;
+  plinton.wezterm = {
+    enable = true;
+    use_homebrew = true;
+  };
   plinton.kids.enable = true;
   plinton.terminal = {
     enable = true;
