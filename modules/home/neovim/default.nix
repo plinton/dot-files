@@ -92,6 +92,7 @@ in
         which-key-nvim
         indent-blankline-nvim
         lspsaga-nvim
+        goto-preview
       ] ++ (if cfg.fullGrammars then fullGrammars else liteGrammars);
     };
   };
