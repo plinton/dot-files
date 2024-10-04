@@ -192,7 +192,7 @@ end
 
 local tsserver_path = os.getenv("NVIM_TSSERVER_PATH")
 local typescript_path = os.getenv("NVIM_TYPESCRIPT_PATH")
-nvim_lsp.tsserver.setup {
+nvim_lsp.ts_ls.setup {
   capabilities = capabilities,
   on_attach = on_attach,
   cmd = { tsserver_path, "--stdio" },
