@@ -54,38 +54,9 @@ vim.api.nvim_create_autocmd({'BufRead','BufNewFile'}, {
 vim.cmd('autocmd FileType ruby setlocal indentkeys-=.')
 
 local trouble = require("trouble")
-trouble.setup({
-  mode = "document_diagnostics"
-})
+trouble.setup({ })
 local fzf_lua = require('fzf-lua')
 fzf_lua.setup({})
-vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
-vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
-vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
-
-vim.keymap.set('n', '<leader>ff', fzf_lua.files, default_key_opts({desc = "find files"}))
-vim.keymap.set('n', '<leader>fg', fzf_lua.live_grep_native, default_key_opts({desc = "live grep"}))
-vim.keymap.set('n', '<leader>fb', fzf_lua.buffers, default_key_opts({desc = "find buffers"}))
-vim.keymap.set("n", "<leader>tt", trouble.toggle,
-  default_key_opts({desc = "toggle trouble"})
-)
-vim.keymap.set("n", "<leader>tw", function () trouble.toggle("workspace_diagnostics") end,
-  default_key_opts({desc = "toggle trouble diagnostics for workspace"})
-)
-vim.keymap.set("n", "<leader>td", function () trouble.toggle("document_diagnostics") end,
-  default_key_opts({desc = "toggle trouble diagnostics for current buffer"})
-)
-vim.keymap.set("n", "<leader>tl", function () trouble.toggle("loclist") end,
-  default_key_opts({desc = "toggle trouble loclist"})
-)
-vim.keymap.set("n", "<leader>tq", function () trouble.toggle("quickfix") end,
-  default_key_opts({desc = "toggle trouble quickfix"})
-)
-vim.keymap.set("n", "gR", function () trouble.toggle("lsp_references") end,
-  default_key_opts({desc = "toggle trouble lsp references"})
-)
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
-
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
   modules = {},
@@ -211,30 +182,11 @@ require('lspsaga').setup({
     virtual_text = false,
   },
 })
-goto_preview = require('goto-preview')
+local goto_preview = require('goto-preview')
 goto_preview.setup()
 local lsp_format = require('lsp-format')
 lsp_format.setup({})
 local on_attach = function(client, buffer)
-
-  -- Mappings.
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, default_key_opts({desc = "go to declaration"}))
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, default_key_opts({desc = "go to definition"}))
-  vim.keymap.set('n', 'pd', ':Lspsaga peek_definition<cr>', default_key_opts({desc = "go to definition"}))
-  vim.keymap.set('n', 'K', ':Lspsaga hover_doc<cr>', default_key_opts({desc = "show hover information"}))
-  vim.keymap.set('n', 'gi', ':Lspsaga finder imp<cr>', default_key_opts({desc = "go to implementation"}))
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, default_key_opts({desc = "show signature help"}))
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, default_key_opts({desc = "go to type definition"}))
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, default_key_opts({desc = "rename symbol"}))
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, default_key_opts({desc = "code action"}))
-  vim.keymap.set('n', 'gr', ':Lspsaga finder ref<cr>', default_key_opts({desc = "go to references"}))
-  vim.keymap.set('n', '<leader>fo', function() vim.lsp.buf.format { async = true } end, {noremap = true, desc = "format buffer"})
-  vim.keymap.set('n', 'gpd', goto_preview.goto_preview_definition, default_key_opts({desc = "preview definition"}))
-  vim.keymap.set('n', 'gpt', goto_preview.goto_preview_type_definition, default_key_opts({desc = "preview type definition"}))
-  vim.keymap.set('n', 'gpi', goto_preview.goto_preview_implementation, default_key_opts({desc = "preview implementation"}))
-  vim.keymap.set('n', 'gpD', goto_preview.goto_preview_declation, default_key_opts({desc = "preview declaration"}))
-  vim.keymap.set('n', 'gP', goto_preview.close_all_win, default_key_opts({desc = "close all preview windows"}))
-  vim.keymap.set('n', 'gpr', goto_preview.goto_preview_references, default_key_opts({desc = "preview references"}))
   lsp_format.on_attach(client, buffer)
 end
 
@@ -325,7 +277,6 @@ cmp.event:on(
 local gitsigns = require('gitsigns')
 gitsigns.setup {
   on_attach = function(bufnr)
-
     -- Navigation
     vim.keymap.set('n', '<leader>gb', function() gitsigns.blame_line{full=true} end, default_key_opts({desc = "show full blame"}))
     vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, default_key_opts({desc = "toggle current line blame"}))
@@ -337,3 +288,52 @@ gitsigns.setup {
     delay = 200,
   },
 }
+
+-- Mappings
+vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true, desc = "copy to system clipboard"})
+vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true, desc = "copy line to system clipboard"})
+vim.keymap.set('v', '<leader>c', require('osc52').copy_visual, default_key_opts({desc = "copy visual selection to system clipboard"}))
+
+vim.keymap.set('n', '<leader>ff', fzf_lua.files, default_key_opts({desc = "find files"}))
+vim.keymap.set('n', '<leader>fg', fzf_lua.live_grep_native, default_key_opts({desc = "live grep"}))
+vim.keymap.set('n', '<leader>fb', fzf_lua.buffers, default_key_opts({desc = "find buffers"}))
+vim.keymap.set("n", "<leader>tt", function() trouble.toggle("diagnostics") end,
+  default_key_opts({desc = "toggle trouble diagnostics"})
+)
+vim.keymap.set("n", "<leader>tl", function() trouble.toggle("loclist") end,
+  default_key_opts({desc = "toggle trouble loclist"})
+)
+vim.keymap.set("n", "<leader>tq", function() trouble.toggle("quickfix") end,
+  default_key_opts({desc = "toggle trouble quickfix"})
+)
+vim.keymap.set("n", "<leader>tr", function() trouble.toggle("lsp_references") end,
+  default_key_opts({desc = "toggle trouble lsp references"})
+)
+vim.keymap.set("n", "<leader>td", function() trouble.toggle("lsp_declarations") end,
+  default_key_opts({desc = "toggle trouble lsp declarations"})
+)
+vim.keymap.set("n", "<leader>tD", function() trouble.toggle("lsp_definitions") end,
+  default_key_opts({desc = "toggle trouble lsp defintions"})
+)
+vim.keymap.set("n", "<leader>ti", function() trouble.toggle("lsp_implementations") end,
+  default_key_opts({desc = "toggle trouble lsp implementations"})
+)
+vim.keymap.set("n", "<leader>ty", function () trouble.toggle("lsp_type_definitions") end,
+  default_key_opts({desc = "toggle trouble lsp type definitions"})
+)
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, default_key_opts({desc = "go to declaration"}))
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, default_key_opts({desc = "go to definition"}))
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, default_key_opts({desc = "show signature help"}))
+vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, default_key_opts({desc = "go to type definition"}))
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, default_key_opts({desc = "rename symbol"}))
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, default_key_opts({desc = "code action"}))
+vim.keymap.set('n', 'gr', ':Lspsaga finder ref<cr>', default_key_opts({desc = "go to references"}))
+vim.keymap.set('n', '<leader>fo', function() vim.lsp.buf.format { async = true } end, {noremap = true, desc = "format buffer"})
+vim.keymap.set('n', 'gpd', goto_preview.goto_preview_definition, default_key_opts({desc = "preview definition"}))
+vim.keymap.set('n', 'gpt', goto_preview.goto_preview_type_definition, default_key_opts({desc = "preview type definition"}))
+vim.keymap.set('n', 'gpi', goto_preview.goto_preview_implementation, default_key_opts({desc = "preview implementation"}))
+vim.keymap.set('n', 'gpD', goto_preview.goto_preview_declaration, default_key_opts({desc = "preview declaration"}))
+vim.keymap.set('n', 'gP', goto_preview.close_all_win, default_key_opts({desc = "close all preview windows"}))
+vim.keymap.set('n', 'gpr', goto_preview.goto_preview_references, default_key_opts({desc = "preview references"}))
