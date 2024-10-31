@@ -10,7 +10,17 @@ in
     home.packages = with pkgs; [
       delta
       fd
+      aider-chat
     ];
+
+    home.sessionVariables = {
+      OLLAMA_API_BASE = "http://127.0.0.1:11434";
+      AIDER_AUTO_COMMITS = "false";
+      AIDER_MODEL = "ollama_chat/llama3.2";
+      AIDER_MAP_TOKENS = "1024";
+      AIDER_CHECK_UPDATE = "false";
+      AIDER_GITIGNORE = "false";
+    };
 
     programs.git = {
       enable = true;
@@ -32,6 +42,10 @@ in
         branch.sort = "committerdate";
         tag.sort = "taggerdate";
       };
+      ignores = [
+        ".aider*"
+        ".env"
+      ];
     };
     programs.jq = {
       enable = true;
