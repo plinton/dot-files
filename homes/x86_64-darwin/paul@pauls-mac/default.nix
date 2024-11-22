@@ -1,8 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixvim, ... }:
 let
 in
 {
   imports = [
+    nixvim.homeManagerModules.nixvim
     ./../../../modules/home/terminal
     ./../../../modules/home/kitty
     ./../../../modules/home/neovim
@@ -27,7 +28,6 @@ in
   };
   plinton.neovim = {
     enable = true;
-    fullGrammars = true;
   };
 
   fonts.fontconfig.enable = true;

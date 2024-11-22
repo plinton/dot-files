@@ -12,15 +12,20 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0-rc1.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Other sources
 
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, lix-module, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, lix-module, nixvim, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -63,6 +68,7 @@
             ./systems/x86_64-darwin/pauls-mac
             # lix-module
             lix-module.nixosModules.default
+
             # `home-manager` module
             home-manager.darwinModules.home-manager
             {
@@ -71,6 +77,8 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.paul = import (./homes/x86_64-darwin + "/paul@pauls-mac");
+              home-manager.extraSpecialArgs = { inherit nixvim; };
+
             }
           ];
         };
