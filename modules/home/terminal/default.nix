@@ -4,7 +4,11 @@ in
 {
   options.plinton.terminal = {
     enable = lib.mkEnableOption "Enable plinton.terminal";
-    starship = lib.mkEnableOption "Enable starship";
+    prompt = lib.mkOption {
+      type = lib.types.nullOr (lib.types.enum [ "starship" "oh-my-posh" ]);
+      default = null;
+      description = "The prompt engine to use";
+    };
   };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -77,7 +81,11 @@ in
       fileWidgetCommand = "fd --type f";
       fileWidgetOptions = [ "--preview 'head {}'" ];
     };
-    programs.starship = lib.mkIf cfg.starship {
+    programs.oh-my-posh = lib.mkIf (cfg.prompt == "oh-my-posh") {
+      enable = true;
+      useTheme = "catppuccin_mocha";
+    };
+    programs.starship = lib.mkIf (cfg.prompt == "starship") {
       enable = true;
       enableZshIntegration = true;
       settings = {
@@ -85,6 +93,8 @@ in
         line_break = {
           disabled = true;
         };
+        success_symbol = "%{%G[❯](bold green)%";
+        error_symbol = "%{%G[❯](bold red)%";
       };
     };
   };

@@ -23,7 +23,7 @@
   plinton.kids.enable = true;
   plinton.terminal = {
     enable = true;
-    starship = true;
+    prompt = "oh-my-posh";
   };
   plinton.neovim = {
     enable = true;

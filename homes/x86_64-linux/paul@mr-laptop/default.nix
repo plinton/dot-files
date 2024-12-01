@@ -26,7 +26,7 @@
   plinton.kde.enable = true;
   plinton.terminal = {
     enable = true;
-    starship = true;
+    prompt = "starship";
   };
 
   # This value determines the Home Manager release that your
