@@ -21,14 +21,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
     # Other sources
 
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, lix-module, nixvim, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, lix-module, nixvim, catppuccin, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
+      inherit (inputs.nixpkgs-unstable.lib) attrValues optionalAttrs;
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
@@ -60,7 +62,7 @@
         ];
       };
       # My `nix-darwin` configs
-      darwinConfigurations = rec {
+      darwinConfigurations = {
         pauls-mac = darwinSystem {
           system = "x86_64-darwin";
           modules = attrValues self.darwinModules ++ [
@@ -77,7 +79,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.paul = import (./homes/x86_64-darwin + "/paul@pauls-mac");
-              home-manager.extraSpecialArgs = { inherit nixvim; };
+              home-manager.extraSpecialArgs = { inherit nixvim catppuccin; };
 
             }
           ];

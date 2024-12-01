@@ -1,9 +1,8 @@
-{ config, pkgs, lib, nixvim, ... }:
-let
-in
+{ config, pkgs, lib, nixvim, catppuccin, ... }:
 {
   imports = [
     nixvim.homeManagerModules.nixvim
+    catppuccin.homeManagerModules.catppuccin
     ./../../../modules/home/terminal
     ./../../../modules/home/kitty
     ./../../../modules/home/neovim
@@ -31,6 +30,12 @@ in
   };
 
   fonts.fontconfig.enable = true;
+
+  catppuccin = {
+    enable = true;
+    accent = "sapphire";
+    flavor = "mocha";
+  };
 
   # N.B. The user will be defined in the flake
 
