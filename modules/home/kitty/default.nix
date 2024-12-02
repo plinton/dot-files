@@ -12,7 +12,7 @@ in {
         shell = "zsh";
       };
       font = {
-        package = (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; });
+        package = pkgs.nerd-fonts.droid-sans-mono;
         name = "DroidSansM Nerd Font Mono";
         size = 12;
       };
