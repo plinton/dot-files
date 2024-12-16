@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nixvim, catppuccin, ... }:
+{ pkgs, nixvim, catppuccin, ... }:
 {
   imports = [
     nixvim.homeManagerModules.nixvim
@@ -23,7 +23,7 @@
   plinton.kids.enable = true;
   plinton.terminal = {
     enable = true;
-    prompt = "oh-my-posh";
+    prompt = "starship";
   };
   plinton.neovim = {
     enable = true;

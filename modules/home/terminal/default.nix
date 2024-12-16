@@ -83,6 +83,7 @@ in
     };
     programs.oh-my-posh = lib.mkIf (cfg.prompt == "oh-my-posh") {
       enable = true;
+      enableZshIntegration = true;
       useTheme = "catppuccin_mocha";
     };
     programs.starship = lib.mkIf (cfg.prompt == "starship") {
@@ -93,8 +94,31 @@ in
         line_break = {
           disabled = true;
         };
-        success_symbol = "%{%G[❯](bold green)%";
-        error_symbol = "%{%G[❯](bold red)%";
+        format = lib.concatStrings [
+          "$directory"
+          "$fossil_branch"
+          "$fossil_metrics"
+          "$git_branch"
+          "$git_commit"
+          "$git_state"
+          "$git_metrics"
+          "$git_status"
+          "$hg_branch"
+          "$pijul_channel"
+          "$nix_shell"
+          "$jobs"
+          "$sudo"
+          "$cmd_duration"
+          "$character"
+        ];
+        directory = {
+          style = "bold lavender";
+          truncate_to_repo = true;
+        };
+        character = {
+          success_symbol = "[❯](bold sapphire)";
+          error_symbol = "[❯](bold rosewater)";
+        };
       };
     };
   };
