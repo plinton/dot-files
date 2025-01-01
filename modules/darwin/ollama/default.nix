@@ -1,12 +1,9 @@
 { config
 , lib
 , pkgs
-, homebrew
 , ...
 }:
 let
-  inherit (lib) types;
-
   cfg = config.plinton.services.ollama;
 in
 {
@@ -19,14 +16,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    homebrew = {
-      brews = [
-        {
-          name = "ollama";
-          start_service = true;
-          restart_service = "changed";
-        }
-      ];
+    environment.systemPackages = [ pkgs.ollama ];
+    launchd.user.agents.ollama = {
+      serviceConfig = {
+        ProgramArguments = [ 
+          "${pkgs.ollama}/bin/ollama"
+          "serve"
+        ];
+        RunAtLoad = true;
+        KeepAlive = true;
+      };
     };
   };
 }

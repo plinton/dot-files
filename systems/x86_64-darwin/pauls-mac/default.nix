@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, ... }:
+{ ... }:
 
 {
   users.users.paul.home = /Users/paul;
@@ -22,9 +22,6 @@
     casks = [
       "psst"
       "thunderbird"
-    ];
-    taps = [
-      "homebrew/services"
     ];
   };
 
