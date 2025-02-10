@@ -15,12 +15,13 @@ in
       delta
       fd
       aider-chat
+      comma
     ];
 
     home.sessionVariables = {
       OLLAMA_API_BASE = "http://127.0.0.1:11434";
       AIDER_AUTO_COMMITS = "false";
-      AIDER_MODEL = "ollama_chat/llama3.2";
+      AIDER_MODEL = "ollama_chat/qwen2.5-coder";
       AIDER_MAP_TOKENS = "1024";
       AIDER_CHECK_UPDATE = "false";
       AIDER_GITIGNORE = "false";

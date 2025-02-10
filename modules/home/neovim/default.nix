@@ -177,6 +177,7 @@ in
             ts_ls = {
               enable = true;
             };
+            rubocop.enable = true;
             sorbet = {
               enable = true;
               package = null;
@@ -188,8 +189,8 @@ in
         };
         copilot-lua = {
           enable = true;
-          suggestion.enabled = true;
-          panel.enabled = true;
+          suggestion.enabled = false;
+          panel.enabled = false;
         };
         cmp = {
           enable = true;
