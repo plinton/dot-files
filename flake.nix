@@ -12,7 +12,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -30,11 +30,18 @@
   outputs = { self, darwin, nixpkgs, home-manager, lix-module, nixvim, catppuccin, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs-unstable.lib) attrValues optionalAttrs;
+      inherit (inputs.nixpkgs-unstable.lib) optionalAttrs singleton;
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
+        overlays = singleton (
+          final: prev: (optionalAttrs (prev.stdenv.system == "x86_64-darwin") {
+            aws-sdk-cpp = prev.aws-sdk-cpp.overrideAttrs (oldAttrs: {
+              cmakeFlags = oldAttrs.cmakeFlags ++ [ "-DENABLE_TESTING=OFF" ];
+            });
+          })
+        );
       };
     in
     {
@@ -65,7 +72,7 @@
       darwinConfigurations = {
         pauls-mac = darwinSystem {
           system = "x86_64-darwin";
-          modules = attrValues self.darwinModules ++ [
+          modules = [
             # Main `nix-darwin` config
             ./systems/x86_64-darwin/pauls-mac
             # lix-module
@@ -85,25 +92,5 @@
           ];
         };
       };
-
-      # Overlays --------------------------------------------------------------- {{{
-
-      overlays = {
-        # Overlays to add various packages into package set
-
-        # Overlay useful on Macs with Apple Silicon
-        apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-          # Add access to x86 packages system is running Apple Silicon
-          pkgs-x86 = import inputs.nixpkgs-unstable {
-            system = "x86_64-darwin";
-            inherit (nixpkgsConfig) config;
-          };
-
-        };
-      };
-
-      # My `nix-darwin` modules that are pending upstream, or patched versions waiting on upstream
-      # fixes.
-      darwinModules = { };
     };
 }

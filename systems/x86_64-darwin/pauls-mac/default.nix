@@ -7,11 +7,12 @@
     ./../../../modules/darwin/ollama
   ];
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
   nix.optimise.automatic = true;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    sandbox = true
   '';
+  ids.gids.nixbld = 30000;
 
   homebrew = {
     enable = true;
