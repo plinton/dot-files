@@ -37,6 +37,7 @@
         config = { allowUnfree = true; };
         overlays = singleton (
           final: prev: (optionalAttrs (prev.stdenv.system == "x86_64-darwin") {
+            # some tests fail sometimes, at least on x86_64-darwin
             aws-sdk-cpp = prev.aws-sdk-cpp.overrideAttrs (oldAttrs: {
               cmakeFlags = oldAttrs.cmakeFlags ++ [ "-DENABLE_TESTING=OFF" ];
             });
