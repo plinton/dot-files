@@ -6,6 +6,7 @@ in
   options.plinton.neovim = {
     enable = lib.mkEnableOption "enable neovim";
   };
+
   config = lib.mkIf cfg.enable {
     programs.nixvim = {
       defaultEditor = true;
@@ -91,7 +92,7 @@ in
             treesitter_context = true;
             lsp_trouble = true;
             treesitter = true;
-            cmp = true;
+            blink_cmp = true;
             gitsigns = true;
             indent_blankline = {
               enabled = true;
@@ -194,44 +195,28 @@ in
             panel.enabled = false;
           };
         };
-        cmp = {
+        blink-copilot.enable = true;
+        blink-cmp = {
           enable = true;
+
           settings = {
-            mapping = {
-              "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-              "<Down>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
-              "<Up>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
-              "<C-j>" = "cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })";
-              "<C-k>" = "cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })";
-              "<C-b>" = "cmp.mapping.scroll_docs(-4)";
-              "<C-f>" = "cmp.mapping.scroll_docs (4)";
-              "<C-Space>" = "cmp.mapping.complete()";
-              "<C-e>" = "cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close(), })";
-              "<CR>" = "cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })";
+            signature = {
+              enable = true;
             };
-            snippet = {
-              expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-            };
-            sources = [
-              { name = "nvim_lsp"; }
-              { name = "luasnip"; }
-              { name = "copilot"; }
-              { name = "treesitter"; }
-              { name = "nvim_lua"; }
-              { name = "buffer"; }
-              { name = "path"; }
-            ];
-          };
-          cmdline = {
-            "/" = {
-              mapping.__raw = "cmp.mapping.preset.cmdline()";
-              sources = [{ name = "buffer"; }];
-            };
-            ":" = {
-              mapping.__raw = "cmp.mapping.preset.cmdline()";
-              sources = [
-                { name = "path"; }
-                { name = "cmdline"; }
+            sources = {
+              providers = {
+                copilot = {
+                  async = true;
+                  module = "blink-copilot";
+                  name = "copilot";
+                };
+              };
+              default = [
+                "snippets"
+                "lsp"
+                "copilot"
+                "path"
+                "buffer"
               ];
             };
           };
@@ -291,8 +276,3 @@ in
     };
   };
 }
-
-
-
-
-
