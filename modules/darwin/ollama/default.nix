@@ -19,7 +19,7 @@ in
     environment.systemPackages = [ pkgs.ollama ];
     launchd.user.agents.ollama = {
       serviceConfig = {
-        ProgramArguments = [ 
+        ProgramArguments = [
           "${pkgs.ollama}/bin/ollama"
           "serve"
         ];
