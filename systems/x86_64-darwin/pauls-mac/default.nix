@@ -10,7 +10,6 @@
   nix.optimise.automatic = true;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
-    sandbox = true
   '';
   ids.gids.nixbld = 30000;
 
