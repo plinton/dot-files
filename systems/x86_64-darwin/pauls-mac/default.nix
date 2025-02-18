@@ -11,6 +11,11 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+  nix.settings = {
+    # sandbox has issues on macos, trust the defaults instead
+    #sandbox = true;
+    #extra-sandbox-paths = ["/nix/store"];
+  };
   ids.gids.nixbld = 30000;
 
   homebrew = {
