@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ... }:
-let
-  cfg = config.plinton.neovim;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.plinton.neovim;
+in {
   options.plinton.neovim = {
     enable = lib.mkEnableOption "enable neovim";
   };
@@ -31,7 +34,7 @@ in
       autoCmd = [
         {
           command = "setlocal indentkeys-=.";
-          event = [ "FileType" ];
+          event = ["FileType"];
           pattern = "ruby";
         }
       ];
@@ -158,7 +161,6 @@ in
               "<leader><" = "@parameter.inner";
             };
           };
-
         };
         lsp = {
           enable = true;
@@ -235,11 +237,17 @@ in
             };
             "<leader>ff" = {
               action = "files";
-              options = { desc = "Find files"; silent = true; };
+              options = {
+                desc = "Find files";
+                silent = true;
+              };
             };
             "<leader>fb" = {
               action = "buffers";
-              options = { desc = "Find buffers"; silent = true; };
+              options = {
+                desc = "Find buffers";
+                silent = true;
+              };
             };
           };
         };

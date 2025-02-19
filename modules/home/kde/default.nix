@@ -1,7 +1,10 @@
-{ pkgs, lib, ... }:
-let cfg = config.plinton.kde;
-in
 {
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.plinton.kde;
+in {
   options.plinton.kde = {
     enable = mkEnableOption "KDE Plasma Desktop";
   };

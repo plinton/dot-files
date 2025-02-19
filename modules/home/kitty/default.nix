@@ -1,5 +1,10 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.plinton.kitty;
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.plinton.kitty;
 in {
   options.plinton.kitty = {
     enable = lib.mkEnableOption "enable kitty with config";
@@ -16,7 +21,7 @@ in {
         name = "DroidSansM Nerd Font Mono";
         size = 12;
       };
-      darwinLaunchOptions = [ "--single-instance" ];
+      darwinLaunchOptions = ["--single-instance"];
       shellIntegration = {
         enableZshIntegration = true;
       };

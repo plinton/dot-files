@@ -1,7 +1,11 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.plinton.kids;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.plinton.kids;
+in {
   options.plinton.kids = {
     enable = lib.mkEnableOption "Enable plinton.kids";
   };

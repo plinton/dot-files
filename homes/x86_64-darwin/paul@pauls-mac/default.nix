@@ -1,5 +1,9 @@
-{ pkgs, nixvim, catppuccin, ... }:
 {
+  pkgs,
+  nixvim,
+  catppuccin,
+  ...
+}: {
   imports = [
     nixvim.homeManagerModules.nixvim
     catppuccin.homeManagerModules.catppuccin

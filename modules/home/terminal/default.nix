@@ -1,11 +1,20 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.plinton.terminal;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.plinton.terminal;
+in {
   options.plinton.terminal = {
     enable = lib.mkEnableOption "Enable plinton.terminal";
     prompt = lib.mkOption {
-      type = lib.types.nullOr (lib.types.enum [ "starship" "oh-my-posh" ]);
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "starship"
+          "oh-my-posh"
+        ]
+      );
       default = null;
       description = "The prompt engine to use";
     };
@@ -80,7 +89,7 @@ in
       enableZshIntegration = true;
       defaultCommand = "fd --type f";
       fileWidgetCommand = "fd --type f";
-      fileWidgetOptions = [ "--preview 'head {}'" ];
+      fileWidgetOptions = ["--preview 'head {}'"];
     };
     programs.oh-my-posh = lib.mkIf (cfg.prompt == "oh-my-posh") {
       enable = true;

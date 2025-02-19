@@ -1,24 +1,21 @@
-{ config
-, lib
-, pkgs
-, homebrew
-, ...
-}:
-let
-  cfg = config.plinton.wezterm;
-in
 {
+  config,
+  lib,
+  pkgs,
+  homebrew,
+  ...
+}: let
+  cfg = config.plinton.wezterm;
+in {
   options = {
     plinton.wezterm = {
-      enable = lib.mkEnableOption (
-        "Install and configure wezterm"
-      );
+      enable = lib.mkEnableOption "Install and configure wezterm";
 
-      use_homebrew = lib.mkOption ({
+      use_homebrew = lib.mkOption {
         type = lib.types.bool;
         default = false;
         description = "use homebrew to install wezterm";
-      });
+      };
     };
   };
 

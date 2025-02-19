@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   users.users.paul.home = /Users/paul;
 
   imports = [

@@ -1,7 +1,11 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.plinton.raycast;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.plinton.raycast;
+in {
   options.plinton.raycast = {
     enable = lib.mkEnableOption "Enable Raycast";
   };
