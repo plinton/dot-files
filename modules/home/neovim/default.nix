@@ -203,7 +203,7 @@ in {
 
           settings = {
             signature = {
-              enable = true;
+              enabled = true;
             };
             sources = {
               providers = {
