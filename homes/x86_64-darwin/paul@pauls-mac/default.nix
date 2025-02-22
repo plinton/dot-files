@@ -1,7 +1,7 @@
 {
-  pkgs,
   nixvim,
   catppuccin,
+  pkgs,
   ...
 }: {
   imports = [
@@ -13,6 +13,10 @@
     ./../../../modules/home/kids
     ./../../../modules/home/raycast
     ./../../../modules/home/wezterm
+    ./../../../modules/home/direnv
+  ];
+  home.packages = with pkgs; [
+    devenv
   ];
 
   programs.git = {

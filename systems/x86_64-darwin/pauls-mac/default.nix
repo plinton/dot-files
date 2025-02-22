@@ -4,7 +4,6 @@
   imports = [
     ./../../../modules/darwin/ollama
   ];
-  # Auto upgrade nix package and the daemon service.
   nix.optimise.automatic = true;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
