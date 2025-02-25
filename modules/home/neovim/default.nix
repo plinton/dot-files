@@ -205,6 +205,10 @@ in {
             signature = {
               enabled = true;
             };
+            completion = {
+              keyword.range = "full";
+            };
+
             sources = {
               providers = {
                 copilot = {
