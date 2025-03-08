@@ -15,6 +15,7 @@ in {
           "oh-my-posh"
         ]
       );
+      
       default = null;
       description = "The prompt engine to use";
     };
@@ -43,16 +44,29 @@ in {
       };
       extraConfig = {
         init.defaultBranch = "main";
-        push.default = "current";
+        push = {
+          default = "current";
+          autoSetupRemote = true;
+        };
         pull.rebase = true;
         rebase = {
           autoSquash = true;
           autoStash = true;
           updateRefs = true;
         };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
         merge.conflictStyle = "zdiff3";
         rerere.enabled = true;
-        diff.algorithm = "histogram";
+        diff = {
+          algorithm = "histogram";
+          colorMoved = true;
+          mnemonicPrefix = true;
+          renames = true;
+        };
         branch.sort = "committerdate";
         tag.sort = "taggerdate";
       };
