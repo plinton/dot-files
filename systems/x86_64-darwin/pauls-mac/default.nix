@@ -12,8 +12,8 @@
     # sandbox has issues on macos, trust the defaults instead
     #sandbox = true;
     #extra-sandbox-paths = ["/nix/store"];
-    extra-substituters = "https://devenv.cachix.org";
-    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    extra-substituters = ["https://devenv.cachix.org" "https://nixpkgs-ruby.cachix.org"];
+    extra-trusted-public-keys = ["devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" "nixpkgs-ruby.cachix.org-1:vrcdi50fTolOxWCZZkw0jakOnUI1T19oYJ+PRYdK4SM="];
   };
   ids.gids.nixbld = 30000;
 
