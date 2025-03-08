@@ -59,6 +59,7 @@ in {
       ignores = [
         ".aider*"
         ".env"
+        ".direnv"
       ];
     };
     programs.jq = {
