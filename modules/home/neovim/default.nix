@@ -116,12 +116,6 @@ in {
       ];
       plugins = {
         lualine.enable = true;
-        avante = {
-          enable = true;
-          settings = {
-            provider = "copilot";
-          };
-        };
         guess-indent.enable = true;
         gitsigns.enable = true;
         treesitter = {
@@ -191,7 +185,7 @@ in {
           };
         };
         copilot-lua = {
-          enable = true;
+          enable = false;
           settings = {
             suggestion.enabled = false;
             panel.enabled = false;
@@ -220,7 +214,6 @@ in {
               default = [
                 "snippets"
                 "lsp"
-                "copilot"
                 "path"
                 "buffer"
               ];
