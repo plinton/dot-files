@@ -15,9 +15,6 @@
     ./../../../modules/home/wezterm
     ./../../../modules/home/direnv
   ];
-  home.packages = with pkgs; [
-    devenv
-  ];
 
   programs.git = {
     userName = "Paul Ellis Linton";
