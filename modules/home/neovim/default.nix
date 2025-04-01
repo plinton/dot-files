@@ -49,6 +49,15 @@ in {
           };
         }
         {
+          mode = "n";
+          key = "<leader>tr";
+          action = "<cmd>Trouble lsp_references<CR>";
+          options = {
+            silent = true;
+            desc = "Toggle trouble diagnostics";
+          };
+        }
+        {
           key = "gD";
           action.__raw = "vim.lsp.buf.declaration";
           options = {
@@ -117,7 +126,17 @@ in {
       plugins = {
         lualine.enable = true;
         guess-indent.enable = true;
-        gitsigns.enable = true;
+        gitsigns = {
+          enable = true;
+          settings = {
+            current_line_blame = true;
+            current_line_blame_opts = {
+              delay = 100;
+              virt_text = true;
+              virt_text_pos = "eol";
+            };
+          };
+        };
         treesitter = {
           enable = true;
           nixGrammars = true;
