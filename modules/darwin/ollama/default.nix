@@ -20,6 +20,9 @@ in {
           "${pkgs.ollama}/bin/ollama"
           "serve"
         ];
+        EnvironmentVariables = {
+          OLLAMA_CONTEXT_LENGTH = "8192";
+        };
         RunAtLoad = true;
         KeepAlive = true;
       };
