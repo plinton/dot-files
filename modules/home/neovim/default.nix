@@ -178,7 +178,7 @@ in {
         lsp = {
           enable = true;
           servers = {
-            pylyzer = {
+            basedpyright = {
               enable = true;
             };
             ruff = {
