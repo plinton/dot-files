@@ -275,18 +275,9 @@ in {
           settings = {
             auto_preview = true;
             auto_refresh = true;
-            auto_jump = true;
-            auto_close = true;
+            auto_jump = false;
+            auto_close = false;
             focus = true;
-            keys = {
-              close = "q";
-              refresh = "r";
-              jump = "<cr>";
-              toggle_mode = "m";
-              previous = "k";
-              next = "j";
-              toggle_fold = "o";
-            };
           };
         };
         nvim-autopairs.enable = true;
