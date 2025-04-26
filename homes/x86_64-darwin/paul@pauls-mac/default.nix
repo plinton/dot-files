@@ -6,7 +6,7 @@
 }: {
   imports = [
     nixvim.homeManagerModules.nixvim
-    catppuccin.homeManagerModules.catppuccin
+    catppuccin.homeModules.catppuccin
     ./../../../modules/home/terminal
     ./../../../modules/home/kitty
     ./../../../modules/home/neovim
