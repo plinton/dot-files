@@ -26,6 +26,7 @@ in {
         enableZshIntegration = true;
       };
       keybindings = {
+        "cmd+enter" = "launch --cwd=current";
         "ctrl+shift+>" = "next_window";
         "ctrl+shift+<" = "previous_window";
       };
