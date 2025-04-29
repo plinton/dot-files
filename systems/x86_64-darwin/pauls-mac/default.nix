@@ -24,8 +24,6 @@
       "firefoxpwa"
     ];
     casks = [
-      "psst"
-      "thunderbird"
     ];
   };
 
