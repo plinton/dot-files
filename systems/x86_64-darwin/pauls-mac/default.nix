@@ -1,5 +1,6 @@
 {...}: {
   users.users.paul.home = /Users/paul;
+  system.primaryUser = "paul";
 
   imports = [
     ./../../../modules/darwin/ollama
@@ -20,6 +21,7 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "zap";
+    user = "paul";
     brews = [
       "firefoxpwa"
     ];
